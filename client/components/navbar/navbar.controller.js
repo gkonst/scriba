@@ -1,23 +1,27 @@
 'use strict';
 
 angular.module('scribaApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth) {
-    $scope.menu = [{
+  .controller('NavbarCtrl', function ($location, Auth) {
+    this.menu = [{
       'title': 'Home',
       'link': '/'
     }];
 
-    $scope.isCollapsed = true;
-    $scope.isLoggedIn = Auth.isLoggedIn;
-    $scope.isAdmin = Auth.isAdmin;
-    $scope.getCurrentUser = Auth.getCurrentUser;
+    this.isCollapsed = true;
+    this.isLoggedIn = Auth.isLoggedIn;
+    this.isAdmin = Auth.isAdmin;
+    this.getCurrentUser = Auth.getCurrentUser;
 
-    $scope.logout = function() {
+    this.toggle = function () {
+      this.isCollapsed = !this.isCollapsed
+    };
+
+    this.logout = function () {
       Auth.logout();
       $location.path('/login');
     };
 
-    $scope.isActive = function(route) {
+    this.isActive = function (route) {
       return route === $location.path();
     };
   });
