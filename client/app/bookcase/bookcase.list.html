@@ -1,0 +1,21 @@
+<div class="col-md-12" ng-controller="BookcaseCtrl as bookcaseCtrl">
+  <button type="button" class="btn btn-default" ng-click="bookcaseCtrl.add()">Add</button>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Info</th>
+      <th>Location</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="bookcase in bookcaseCtrl.bookcases">
+      <td>{{$index + 1}}</td>
+      <td>{{bookcase.name}}</td>
+      <td>{{bookcase.info}}</td>
+      <td>{{bookcase.location}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
