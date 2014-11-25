@@ -23,8 +23,14 @@ angular.module('scriba.bookcase')
     refresh();
   })
   .controller('BookcaseDetailCtrl', function ($modalInstance, BookcaseService) {
-    this.ok = function () {
-      $modalInstance.close();
+    this.bookcase = {};
+
+    this.save = function (bookcaseForm) {
+      if (bookcaseForm.$valid) {
+        BookcaseService.save(this.bookcase, function () {
+          $modalInstance.close();
+        });
+      }
     };
 
     this.cancel = function () {

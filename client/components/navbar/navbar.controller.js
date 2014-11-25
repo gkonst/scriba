@@ -13,7 +13,7 @@ angular.module('scribaApp')
     this.getCurrentUser = Auth.getCurrentUser;
 
     this.toggle = function () {
-      return this.isCollapsed = !this.isCollapsed;
+      this.isCollapsed = !this.isCollapsed;
     };
 
     this.logout = function () {
