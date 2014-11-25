@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('scribaApp')
+angular.module('scriba.account')
   .controller('SignupCtrl', function ($scope, Auth, $location, $window) {
     $scope.user = {};
     $scope.errors = {};

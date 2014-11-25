@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('scribaApp')
+angular.module('scriba.account', [])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/login', {

@@ -6,6 +6,8 @@ angular.module('scribaApp', [
   'ngSanitize',
   'ngRoute',
   'ui.bootstrap',
+  'scriba.account',
+  'scriba.admin',
   'scriba.bookcase'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
