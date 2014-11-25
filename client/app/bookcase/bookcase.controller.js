@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('scribaApp')
+angular.module('scriba.bookcase')
   .controller('BookcaseCtrl', function ($modal, $log, BookcaseService) {
     var data = this;
 

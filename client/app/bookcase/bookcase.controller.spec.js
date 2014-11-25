@@ -3,7 +3,7 @@
 describe('Controller: BookcaseCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('scribaApp'));
+  beforeEach(module('scriba.bookcase'));
 
   var BookcaseCtrl, scope;
 
