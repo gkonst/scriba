@@ -69,16 +69,16 @@ module.exports = function (grunt) {
         ],
         tasks: ['injector:css']
       },
-      mochaTest: {
-        files: ['server/**/*.spec.js'],
-        tasks: ['env:test', 'mochaTest']
+      serverTest: {
+        files: ['server/**/*.js'],
+        tasks: ['newer:jshint:serverTest', 'env:test', 'mochaTest']
       },
-      jsTest: {
+      clientTest: {
         files: [
           '<%= yeoman.client %>/{app,components}/**/*.spec.js',
           '<%= yeoman.client %>/{app,components}/**/*.mock.js'
         ],
-        tasks: ['newer:jshint:all', 'karma']
+        tasks: ['newer:jshint:clientTest', 'karma']
       },
       injectSass: {
         files: [
@@ -110,7 +110,7 @@ module.exports = function (grunt) {
         files: [
           'server/**/*.{js,json}'
         ],
-        tasks: ['express:dev', 'wait'],
+        tasks: ['newer:jshint:server', 'express:dev', 'wait'],
         options: {
           livereload: true,
           nospawn: true //Without this option specified express won't be reloaded
@@ -139,12 +139,12 @@ module.exports = function (grunt) {
         },
         src: ['server/**/*.spec.js']
       },
-      all: [
+      client: [
         '<%= yeoman.client %>/{app,components}/**/*.js',
         '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
         '!<%= yeoman.client %>/{app,components}/**/*.mock.js'
       ],
-      test: {
+      clientTest: {
         src: [
           '<%= yeoman.client %>/{app,components}/**/*.spec.js',
           '<%= yeoman.client %>/{app,components}/**/*.mock.js'
@@ -404,10 +404,10 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        'sass',
+        'sass'
       ],
       test: [
-        'sass',
+        'sass'
       ],
       debug: {
         tasks: [
@@ -546,7 +546,7 @@ module.exports = function (grunt) {
           ]
         }
       }
-    },
+    }
   });
 
   // Used for delaying livereload until after server has restarted
