@@ -1,16 +1,16 @@
 'use strict';
 
-describe('Controller: BookcaseCtrl', function () {
+describe('Controller: BookcaseListCtrl', function () {
 
   // load the controller's module
   beforeEach(module('scriba.bookcase'));
 
-  var bookcaseCtrl, $httpBackend;
+  var bookcaseListCtrl, $httpBackend;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function (_$httpBackend_, $controller) {
     $httpBackend = _$httpBackend_;
-    bookcaseCtrl = $controller('BookcaseCtrl');
+    bookcaseListCtrl = $controller('BookcaseListCtrl');
   }));
 
   it('should fetch list of bookcases', function () {
@@ -22,6 +22,6 @@ describe('Controller: BookcaseCtrl', function () {
     $httpBackend.flush();
 
     // then
-    expect(bookcaseCtrl.bookcases.length).toBe(2);
+    expect(bookcaseListCtrl.bookcases.length).toBe(2);
   });
 });

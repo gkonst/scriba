@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scriba.bookcase')
-  .controller('BookcaseCtrl', function ($modal, $log, BookcaseService) {
+  .controller('BookcaseListCtrl', function ($modal, $log, BookcaseService) {
     var data = this;
 
     function refresh() {
@@ -10,9 +10,7 @@ angular.module('scriba.bookcase')
 
     this.add = function () {
       var modalInstance = $modal.open({
-        templateUrl: 'app/bookcase/bookcase.detail.html',
-        controller: 'BookcaseDetailCtrl',
-        controllerAs: 'bookcaseDetailCtrl'
+        templateUrl: 'app/bookcase/bookcase.detail.html'
       });
 
       modalInstance.result.then(function () {
