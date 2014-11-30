@@ -8,7 +8,8 @@ angular.module('scribaApp', [
   'ui.bootstrap',
   'scriba.account',
   'scriba.admin',
-  'scriba.bookcase'
+  'scriba.bookcase',
+  'scriba.book'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
