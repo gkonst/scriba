@@ -22,6 +22,6 @@ describe('Controller: BookcaseListCtrl', function () {
     $httpBackend.flush();
 
     // then
-    expect(bookcaseListCtrl.bookcases.length).toBe(2);
+    bookcaseListCtrl.bookcases.should.have.length(2);
   });
 });

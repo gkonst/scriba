@@ -11,6 +11,6 @@ describe('Controller: BookListCtrl', function () {
   }));
 
   it('should ...', function () {
-    expect(1).toEqual(1);
+    "foo".should.be.equal('foo');
   });
 });
