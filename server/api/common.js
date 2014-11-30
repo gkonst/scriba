@@ -8,11 +8,11 @@ exports.handleError = function (res, err) {
 
 exports.find = function (model) {
   return function (req, res) {
-    model.find(function (err, books) {
+    model.find(function (err, result) {
       if (err) {
         return exports.handleError(res, err);
       }
-      return res.json(200, books);
+      return res.json(200, result);
     });
   }
 };
@@ -33,11 +33,11 @@ exports.findById = function (model) {
 
 exports.create = function (model) {
   return function (req, res) {
-    model.create(req.body, function (err, book) {
+    model.create(req.body, function (err, result) {
       if (err) {
         return exports.handleError(res, err);
       }
-      return res.json(201, book);
+      return res.json(201, result);
     });
   };
 };
@@ -47,19 +47,19 @@ exports.update = function (model) {
     if (req.body._id) {
       delete req.body._id;
     }
-    model.findById(req.params.id, function (err, book) {
+    model.findById(req.params.id, function (err, result) {
       if (err) {
         return exports.handleError(res, err);
       }
-      if (!book) {
+      if (!result) {
         return res.send(404);
       }
-      var updated = _.merge(book, req.body);
+      var updated = _.merge(result, req.body);
       updated.save(function (err) {
         if (err) {
           return exports.handleError(res, err);
         }
-        return res.json(200, book);
+        return res.json(200, result);
       });
     });
   };
@@ -67,14 +67,14 @@ exports.update = function (model) {
 
 exports.destroy = function (model) {
   return function (req, res) {
-    model.findById(req.params.id, function (err, book) {
+    model.findById(req.params.id, function (err, result) {
       if (err) {
         return exports.handleError(res, err);
       }
-      if (!book) {
+      if (!result) {
         return res.send(404);
       }
-      book.remove(function (err) {
+      result.remove(function (err) {
         if (err) {
           return exports.handleError(res, err);
         }

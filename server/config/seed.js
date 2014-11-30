@@ -8,6 +8,8 @@
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
 var Bookcase = require('../api/bookcase/bookcase.model');
+var Book = require('../api/book/book.model');
+var mongoose = require('mongoose');
 
 Thing.find({}).remove(function () {
   Thing.create({
@@ -51,9 +53,28 @@ User.find({}).remove(function () {
 
 Bookcase.find({}).remove(function () {
   Bookcase.create({
-      name: 'Bookcase in hall'
+      _id: mongoose.Types.ObjectId('117b043ad0386eab3d164673'),
+      name: 'Bookcase #1'
+    },
+    {
+      _id: mongoose.Types.ObjectId('127b043ad0386eab3d164673'),
+      name: 'Bookcase #2'
     }, function () {
       console.log('finished populating bookcases');
     }
   );
+});
+
+Book.find().remove(function () {
+  Book.create({
+    _id: mongoose.Types.ObjectId('217b043ad0386eab3d164673'),
+    name: 'Book #1',
+    bookcase: mongoose.Types.ObjectId('117b043ad0386eab3d164673')
+  }, {
+    _id: mongoose.Types.ObjectId('227b043ad0386eab3d164673'),
+    name: 'Book #2',
+    bookcase: mongoose.Types.ObjectId('117b043ad0386eab3d164673')
+  }, function () {
+    console.log('finished populating bookcases');
+  });
 });

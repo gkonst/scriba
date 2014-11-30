@@ -1,6 +1,6 @@
 'use strict';
 
-var should = require('should');
+require('chai').should();
 var User = require('./user.model');
 
 var user = new User({
