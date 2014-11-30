@@ -75,6 +75,6 @@ Book.find().remove(function () {
     name: 'Book #2',
     bookcase: mongoose.Types.ObjectId('117b043ad0386eab3d164673')
   }, function () {
-    console.log('finished populating bookcases');
+    console.log('finished populating books');
   });
 });
