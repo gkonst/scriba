@@ -5,5 +5,8 @@ angular.module('scriba.book', ['ngRoute', 'ngResource', 'ui.bootstrap'])
     $routeProvider
       .when('/book', {
         templateUrl: 'app/book/book.list.html'
+      })
+      .when('/bookcase/:bookcaseId/books', {
+        templateUrl: 'app/book/book.list.html'
       });
   });

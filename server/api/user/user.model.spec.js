@@ -35,7 +35,7 @@ describe('User Model', function() {
     user.save(function() {
       var userDup = new User(user);
       userDup.save(function(err) {
-        should.exist(err);
+        err.should.exist();
         done();
       });
     });
@@ -44,7 +44,7 @@ describe('User Model', function() {
   it('should fail when saving without an email', function(done) {
     user.email = '';
     user.save(function(err) {
-      should.exist(err);
+      err.should.exist();
       done();
     });
   });

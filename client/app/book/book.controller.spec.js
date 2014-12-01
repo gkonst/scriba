@@ -2,15 +2,37 @@
 
 describe('Controller: BookListCtrl', function () {
 
-  beforeEach(module('scriba.book'));
+  beforeEach(module('scriba.book', 'scriba.bookcase'));
 
-  var BookListCtrl;
+  var sut, $httpBackend, routeParams, $controller;
 
-  beforeEach(inject(function ($controller) {
-    BookListCtrl = $controller('BookListCtrl');
+  beforeEach(inject(function (_$httpBackend_, _$controller_) {
+    $httpBackend = _$httpBackend_;
+    $controller = _$controller_;
   }));
 
-  it('should ...', function () {
-    'foo'.should.be.equal('foo');
+  afterEach(function () {
+    $httpBackend.verifyNoOutstandingExpectation();
+    $httpBackend.verifyNoOutstandingRequest();
+  });
+
+  function initCtrl() {
+    sut = $controller('BookListCtrl', {
+      $routeParams: routeParams
+    });
+  }
+
+  it('should fetch list of books for given bookcaseId', function () {
+    // given
+    routeParams = {bookcaseId: '123'};
+    $httpBackend.expectGET('/api/bookcases/123/books')
+      .respond([{name: 'test1'}, {name: 'test2'}]);
+
+    // when
+    initCtrl();
+    $httpBackend.flush();
+
+    // then
+    sut.books.should.have.length(2);
   });
 });
