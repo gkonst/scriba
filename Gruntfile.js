@@ -121,7 +121,6 @@ module.exports = function (grunt) {
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
-        jshintrc: '<%= yeoman.client %>/.jshintrc',
         reporter: require('jshint-stylish')
       },
       server: {
@@ -139,12 +138,20 @@ module.exports = function (grunt) {
         },
         src: ['server/**/*.spec.js']
       },
-      client: [
-        '<%= yeoman.client %>/{app,components}/**/*.js',
-        '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
-        '!<%= yeoman.client %>/{app,components}/**/*.mock.js'
-      ],
+      client: {
+        options: {
+          jshintrc: '<%= yeoman.client %>/.jshintrc'
+        },
+        src: [
+          '<%= yeoman.client %>/{app,components}/**/*.js',
+          '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
+          '!<%= yeoman.client %>/{app,components}/**/*.mock.js'
+        ]
+      },
       clientTest: {
+        options: {
+          jshintrc: '<%= yeoman.client %>/.jshintrc-spec'
+        },
         src: [
           '<%= yeoman.client %>/{app,components}/**/*.spec.js',
           '<%= yeoman.client %>/{app,components}/**/*.mock.js'
@@ -606,6 +613,8 @@ module.exports = function (grunt) {
   grunt.registerTask('test', function (target) {
     if (target === 'server') {
       return grunt.task.run([
+        'jshint:server',
+        'jshint:serverTest',
         'env:all',
         'env:test',
         'mochaTest'
@@ -615,6 +624,8 @@ module.exports = function (grunt) {
     else if (target === 'client') {
       return grunt.task.run([
         'clean:server',
+        'jshint:client',
+        'jshint:clientTest',
         'env:all',
         'injector:sass',
         'concurrent:test',
