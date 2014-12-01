@@ -12,7 +12,7 @@
     <tbody>
     <tr ng-repeat="bookcase in bookcaseListCtrl.bookcases">
       <td>{{$index + 1}}</td>
-      <td>{{bookcase.name}}</td>
+      <td><a ng-href="/bookcase/{{bookcase._id}}/books">{{bookcase.name}}</a></td>
       <td>{{bookcase.info}}</td>
       <td>{{bookcase.location}}</td>
     </tr>
