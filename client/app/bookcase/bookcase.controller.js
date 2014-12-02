@@ -10,7 +10,9 @@ angular.module('scriba.bookcase')
 
     this.add = function () {
       var modalInstance = $modal.open({
-        templateUrl: 'app/bookcase/bookcase.detail.html'
+        templateUrl: 'app/bookcase/bookcase.detail.html',
+        controller: 'BookcaseDetailCtrl',
+        controllerAs: 'bookcaseDetailCtrl'
       });
 
       modalInstance.result.then(function () {
