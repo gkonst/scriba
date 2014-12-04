@@ -11,15 +11,21 @@
     <tr>
       <th>#</th>
       <th>Name</th>
+      <th>Author</th>
+      <th>Shelf</th>
+      <th>Line</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="book in bookListCtrl.books">
       <td>{{$index + 1}}</td>
       <td>{{book.name}}</td>
+      <td>{{book.author}}</td>
+      <td>{{book.shelf}}</td>
+      <td>{{book.line}}</td>
     </tr>
     <tr ng-hide="bookListCtrl.books.length">
-      <td colspan="2">No books yet</td>
+      <td colspan="5">No books yet</td>
     </tr>
     </tbody>
   </table>

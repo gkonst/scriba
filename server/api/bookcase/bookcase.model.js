@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 var BookcaseSchema = new Schema({
-  name: String,
+  name: {type: String, required: true},
   info: String,
   active: Boolean
 });

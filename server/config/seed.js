@@ -69,11 +69,17 @@ Book.find().remove(function () {
   Book.create({
     _id: mongoose.Types.ObjectId('217b043ad0386eab3d164673'),
     name: 'Book #1',
-    bookcase: mongoose.Types.ObjectId('117b043ad0386eab3d164673')
+    author: 'Author #1',
+    bookcase: mongoose.Types.ObjectId('117b043ad0386eab3d164673'),
+    shelf: 1,
+    line: 2
   }, {
     _id: mongoose.Types.ObjectId('227b043ad0386eab3d164673'),
     name: 'Book #2',
-    bookcase: mongoose.Types.ObjectId('117b043ad0386eab3d164673')
+    author: 'Author #2',
+    bookcase: mongoose.Types.ObjectId('117b043ad0386eab3d164673'),
+    shelf: 1,
+    line: 1
   }, function () {
     console.log('finished populating books');
   });

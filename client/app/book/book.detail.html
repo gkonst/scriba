@@ -19,9 +19,19 @@
           <textarea class="form-control" id="input-desc" placeholder="Description" ng-model="bookDetailCtrl.book.info"></textarea>
         </div>
       </div>
+      <form-input id="shelf"
+                  label="Shelf"
+                  type="number"
+                  ng-model="bookDetailCtrl.book.shelf"
+                  required="true"></form-input>
+      <form-input id="line"
+                  label="Line"
+                  type="number"
+                  ng-model="bookDetailCtrl.book.line"
+                  required="true"></form-input>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-primary" type="submit">Save</button>
+      <button class="btn btn-primary" type="submit" ng-disabled="bookForm.$invalid">Save</button>
       <button class="btn btn-warning" ng-click="bookDetailCtrl.cancel()">Cancel</button>
     </div>
   </form>

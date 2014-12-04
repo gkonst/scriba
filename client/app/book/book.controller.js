@@ -30,7 +30,11 @@ angular.module('scriba.book')
     refresh();
   })
   .controller('BookDetailCtrl', function ($modalInstance, BookService, bookcaseId) {
-    this.book = {bookcase: bookcaseId};
+    this.book = {
+      bookcase: bookcaseId,
+      shelf: 1,
+      line: 1
+    };
 
     this.save = function (bookForm) {
       if (bookForm.$valid) {
