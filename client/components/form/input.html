@@ -1,0 +1,16 @@
+<ng-form name="inputForm">
+  <!-- TODO autofocus -->
+  <div class="form-group"
+       ng-class="{'has-error': (inputForm[opts.inputName].$invalid && !inputForm[opts.inputName].$pristine), 'has-success':  (inputForm[opts.inputName].$valid && !inputForm[opts.inputName].$pristine)}">
+    <label for="{{opts.id}}" class="col-sm-2 control-label">{{opts.label}}</label>
+
+    <div class="col-sm-10">
+      <input class="form-control"
+             id="{{opts.id}}" name="{{opts.inputName}}"
+             type="{{opts.type || 'text'}}"
+             placeholder="{{opts.placeholder || opts.label}}"
+             ng-model="ngModel"
+             required="{{opts.required}}">
+    </div>
+  </div>
+</ng-form>
