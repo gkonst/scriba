@@ -36,7 +36,7 @@ describe('Controller: BookcaseDetailCtrl', function () {
   beforeEach(inject(function (_$httpBackend_, $controller) {
     $httpBackend = _$httpBackend_;
     modalInstanceMock = {close: sinon.spy()};
-    bookDetailCtrl = $controller('BookcaseDetailCtrl', {
+    bookcaseDetailCtrl = $controller('BookcaseDetailCtrl', {
       $modalInstance: modalInstanceMock
     });
   }));
@@ -48,12 +48,12 @@ describe('Controller: BookcaseDetailCtrl', function () {
 
   it('should save bookcase and close modal if form valid', function () {
     // given
-    bookDetailCtrl.bookcase = {name: 'test1'};
+    bookcaseDetailCtrl.bookcase = {name: 'test1'};
     $httpBackend.expectPOST('/api/bookcases', {name: 'test1'})
       .respond(201, {name: 'test1'});
 
     // when
-    bookDetailCtrl.save({$valid: true});
+    bookcaseDetailCtrl.save({$valid: true});
     $httpBackend.flush();
 
     // then
@@ -62,10 +62,10 @@ describe('Controller: BookcaseDetailCtrl', function () {
 
   it('should not save bookcase and close modal if form invalid', function () {
     // given
-    bookDetailCtrl.bookcase = {name: 'test1'};
+    bookcaseDetailCtrl.bookcase = {name: 'test1'};
 
     // when
-    bookDetailCtrl.save({$valid: false});
+    bookcaseDetailCtrl.save({$valid: false});
 
     // then
     modalInstanceMock.close.should.not.have.been.called;
