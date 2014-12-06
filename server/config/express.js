@@ -20,6 +20,7 @@ var mongoose = require('mongoose');
 
 module.exports = function (app) {
   var env = app.get('env');
+  console.log('ENV:', env);
 
   app.use(compression());
   app.use(bodyParser.urlencoded({extended: false}));
