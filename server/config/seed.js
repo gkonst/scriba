@@ -35,10 +35,17 @@ Thing.find({}).remove(function () {
 
 User.find({}).remove(function () {
   User.create({
+      _id: mongoose.Types.ObjectId('017b043ad0386eab3d164673'),
       provider: 'local',
       name: 'Test User',
       email: 'test@test.com',
       password: 'test'
+    }, {
+      _id: mongoose.Types.ObjectId('027b043ad0386eab3d164673'),
+      provider: 'local',
+      name: 'Test User #2',
+      email: 'test1@test.com',
+      password: 'test1'
     }, {
       provider: 'local',
       role: 'admin',
@@ -54,11 +61,18 @@ User.find({}).remove(function () {
 Bookcase.find({}).remove(function () {
   Bookcase.create({
       _id: mongoose.Types.ObjectId('117b043ad0386eab3d164673'),
-      name: 'Bookcase #1'
+      name: 'Bookcase #1',
+      user: mongoose.Types.ObjectId('017b043ad0386eab3d164673')
     },
     {
       _id: mongoose.Types.ObjectId('127b043ad0386eab3d164673'),
-      name: 'Bookcase #2'
+      name: 'Bookcase #2',
+      user: mongoose.Types.ObjectId('017b043ad0386eab3d164673')
+    },
+    {
+      _id: mongoose.Types.ObjectId('137b043ad0386eab3d164673'),
+      name: 'Bookcase #3',
+      user: mongoose.Types.ObjectId('027b043ad0386eab3d164673')
     }, function () {
       console.log('finished populating bookcases');
     }

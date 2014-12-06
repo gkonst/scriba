@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 var BookcaseSchema = new Schema({
   name: {type: String, required: true},
   info: String,
+  user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
   active: Boolean
 });
 
