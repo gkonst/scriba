@@ -25,6 +25,42 @@ describe('GET /api/bookcases', function () {
   });
 });
 
+describe('GET /api/bookcases/{id}', function () {
+
+  it('should respond with JSON object if found', function (done) {
+    request(app)
+      .get('/api/bookcases/117b043ad0386eab3d164673')
+      .set('Authorization', token)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function (err, res) {
+        if (err) {
+          return done(err);
+        }
+        res.body._id.should.be.equal('117b043ad0386eab3d164673');
+        res.body.name.should.be.equal('Bookcase #1');
+        res.body.user.should.be.equal('017b043ad0386eab3d164673');
+        done();
+      });
+  });
+
+  it('should respond with 404 if not found', function (done) {
+    request(app)
+      .get('/api/bookcases/997b043ad0386eab3d164673')
+      .set('Authorization', token)
+      .expect('Content-Type', /json/)
+      .expect(404, done);
+  });
+
+  it('should respond with 403 if not own bookcase', function (done) {
+    request(app)
+      .get('/api/bookcases/137b043ad0386eab3d164673')
+      .set('Authorization', token)
+      .expect('Content-Type', /json/)
+      .expect(403, done);
+  });
+});
+
 describe('GET /api/bookcases/{id}/books', function () {
 
   it('should respond with JSON array if bookcase exist and has books', function (done) {
@@ -63,7 +99,8 @@ describe('GET /api/bookcases/{id}/books', function () {
     request(app)
       .get('/api/bookcases/017b043ad0386eab3d164673/books/')
       .set('Authorization', token)
-      .expect(404);
+      .expect(404)
+      .expect('Content-Type', /json/);
   });
 });
 
