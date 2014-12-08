@@ -72,6 +72,11 @@ Bookcase.find({}).remove(function () {
     {
       _id: mongoose.Types.ObjectId('137b043ad0386eab3d164673'),
       name: 'Bookcase #3',
+      user: mongoose.Types.ObjectId('017b043ad0386eab3d164673')
+    },
+    {
+      _id: mongoose.Types.ObjectId('147b043ad0386eab3d164673'),
+      name: 'Bookcase #4',
       user: mongoose.Types.ObjectId('027b043ad0386eab3d164673')
     }, function () {
       console.log('finished populating bookcases');

@@ -1,8 +1,9 @@
 'use strict';
 
-require('chai').should();
+var should = require('chai').should();
 var app = require('../../app');
 var request = require('supertest');
+var Bookcase = require('./bookcase.model');
 
 var token = 'Bearer ' + require('../../auth/auth.service').signToken('017b043ad0386eab3d164673');
 
@@ -19,7 +20,7 @@ describe('GET /api/bookcases', function () {
           return done(err);
         }
         res.body.should.be.instanceof(Array);
-        res.body.should.have.length(2);
+        res.body.should.have.length(3);
         done();
       });
   });
@@ -54,7 +55,7 @@ describe('GET /api/bookcases/{id}', function () {
 
   it('should respond with 403 if not own bookcase', function (done) {
     request(app)
-      .get('/api/bookcases/137b043ad0386eab3d164673')
+      .get('/api/bookcases/147b043ad0386eab3d164673')
       .set('Authorization', token)
       .expect('Content-Type', /json/)
       .expect(403, done);
@@ -95,12 +96,20 @@ describe('GET /api/bookcases/{id}/books', function () {
       });
   });
 
-  it('should respond with 404 if bookcase not exist', function () {
+  it('should respond with 404 if bookcase not exist', function (done) {
     request(app)
-      .get('/api/bookcases/017b043ad0386eab3d164673/books/')
+      .get('/api/bookcases/997b043ad0386eab3d164673/books/')
       .set('Authorization', token)
-      .expect(404)
-      .expect('Content-Type', /json/);
+      .expect('Content-Type', /json/)
+      .expect(404, done);
+  });
+
+  it('should respond with 403 if not own bookcase', function (done) {
+    request(app)
+      .get('/api/bookcases/147b043ad0386eab3d164673/books/')
+      .set('Authorization', token)
+      .expect('Content-Type', /json/)
+      .expect(403, done);
   });
 });
 
@@ -122,4 +131,79 @@ describe('POST /api/bookcases', function () {
         done();
       });
   })
+});
+
+describe('PUT /api/bookcases/{id}', function () {
+  it('should update bookcase', function (done) {
+    var bookcase = {name: 'test'};
+    request(app)
+      .put('/api/bookcases/137b043ad0386eab3d164673')
+      .set('Authorization', token)
+      .send(bookcase)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function (err, res) {
+        if (err) {
+          return done(err);
+        }
+        res.body._id.should.be.equal('137b043ad0386eab3d164673');
+        res.body.name.should.be.equal('test');
+        res.body.user.should.be.equal('017b043ad0386eab3d164673');
+        done();
+      });
+  });
+
+  it('should respond with 404 if bookcase not exist', function (done) {
+    request(app)
+      .put('/api/bookcases/997b043ad0386eab3d164673')
+      .set('Authorization', token)
+      .expect('Content-Type', /json/)
+      .expect(404, done);
+  });
+
+  it('should respond with 403 if not own bookcase', function (done) {
+    request(app)
+      .put('/api/bookcases/147b043ad0386eab3d164673')
+      .set('Authorization', token)
+      .expect('Content-Type', /json/)
+      .expect(403, done);
+  });
+});
+
+describe('DELETE /api/bookcases/{id}', function () {
+  it('should delete bookcase', function (done) {
+    request(app)
+      .delete('/api/bookcases/137b043ad0386eab3d164673')
+      .set('Authorization', token)
+      .expect(204)
+      .end(function (err) {
+        if (err) {
+          return done(err);
+        }
+        Bookcase.findById('137b043ad0386eab3d164673', function (err, result) {
+          if (err) {
+            return done(err);
+          }
+          should.equal(result, null);
+        });
+        done();
+      });
+  });
+
+  it('should respond with 404 if bookcase not exist', function (done) {
+    request(app)
+      .delete('/api/bookcases/997b043ad0386eab3d164673')
+      .set('Authorization', token)
+      .expect('Content-Type', /json/)
+      .expect(404, done);
+  });
+
+  it('should respond with 403 if not own bookcase', function (done) {
+    request(app)
+      .delete('/api/bookcases/147b043ad0386eab3d164673')
+      .set('Authorization', token)
+      .expect('Content-Type', /json/)
+      .expect(403, done);
+  });
+
 });

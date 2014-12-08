@@ -10,11 +10,14 @@ exports.create = common.create(Bookcase);
 exports.update = common.update(Bookcase);
 exports.destroy = common.destroy(Bookcase);
 
-exports.showBooks = function (req, res) {
-  Book.find({bookcase: req.params.id}, function (err, books) {
-    if (err) {
-      return exports.handleError(res, err);
-    }
-    return res.json(200, books);
-  });
+exports.showBooks = function (req, res, next) {
+  Bookcase.findById(req.params.id,
+    common.nextIfErr(req, res, next,
+      common.notFoundIfEmpty(
+        common.forbiddenIfRestricted(
+          function (req, res, next, result) {
+            Book.find({bookcase: result.id},
+              common.nextIfErr(req, res, next,
+                common.resultAsJson()));
+          }))));
 };
