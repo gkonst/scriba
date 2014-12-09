@@ -14,7 +14,7 @@ angular.module('scribaApp', [
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/bookcase'
       });
 
     $locationProvider.html5Mode(true);

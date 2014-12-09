@@ -502,6 +502,8 @@ module.exports = function (grunt) {
           sort: function (a, b) {
             if (a.split('.')[0] == b.split('.')[0] && b.split('.').length == 2) {
               return 1;
+            } else if (a.split('.')[0] == b.split('.')[0] && a.split('.').length == 2) {
+              return -1;
             } else {
               return a.localeCompare(b);
             }
