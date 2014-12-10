@@ -1,29 +1,23 @@
 'use strict';
 
 angular.module('scriba.account')
-  .controller('LoginCtrl', function ($scope, Auth, $location, $window) {
-    $scope.user = {};
-    $scope.errors = {};
+  .controller('LoginCtrl', function (Auth, $location) {
+    var data = this;
+    data.user = {};
+    data.errors = {};
 
-    $scope.login = function(form) {
-      $scope.submitted = true;
+    this.login = function (form) {
+      data.submitted = true;
 
-      if(form.$valid) {
+      if (form.$valid) {
         Auth.login({
-          email: $scope.user.email,
-          password: $scope.user.password
-        })
-        .then( function() {
-          // Logged in, redirect to home
-            $location.path('/bookcase');
-        })
-        .catch( function(err) {
-          $scope.errors.other = err.message;
+          email: data.user.email,
+          password: data.user.password
+        }).then(function () {
+          $location.path('/bookcase');
+        }).catch(function (err) {
+          data.errors.other = err.message;
         });
       }
-    };
-
-    $scope.loginOauth = function(provider) {
-      $window.location.href = '/auth/' + provider;
     };
   });
