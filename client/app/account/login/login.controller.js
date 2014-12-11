@@ -2,21 +2,19 @@
 
 angular.module('scriba.account')
   .controller('LoginCtrl', function (Auth, $location) {
-    var data = this;
-    data.user = {};
-    data.errors = {};
+    var vm = this;
+    vm.user = {};
+    vm.errors = {};
 
-    this.login = function (form) {
-      data.submitted = true;
-
+    vm.login = function (form) {
       if (form.$valid) {
         Auth.login({
-          email: data.user.email,
-          password: data.user.password
+          email: vm.user.email,
+          password: vm.user.password
         }).then(function () {
           $location.path('/bookcase');
         }).catch(function (err) {
-          data.errors.other = err.message;
+          vm.errors.other = err.message;
         });
       }
     };
