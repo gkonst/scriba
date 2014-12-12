@@ -5,6 +5,7 @@ angular.module('scribaApp')
     return {
       restrict: 'E',
       replace: true,
+      transclude: true,
       scope: {
         field: '='
       },

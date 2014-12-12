@@ -1,4 +1,5 @@
 <div class="help-block" ng-messages="field.$error" ng-show="field.$dirty">
-  <p ng-message="required">You did not enter a field</p>
   <p ng-message="email">Doesn't look like a valid email.</p>
+  <p ng-message="minlength">Must be at least 3 characters.</p>
+  <ng-transclude></ng-transclude>
 </div>

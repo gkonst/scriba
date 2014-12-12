@@ -99,7 +99,7 @@ UserSchema
       }
       respond(true);
     });
-  }, 'The specified email address is already in use.');
+  }, 'unique');
 
 var validatePresenceOf = function (value) {
   return value && value.length;
