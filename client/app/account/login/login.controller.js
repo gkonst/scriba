@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('scriba.account')
-  .controller('LoginCtrl', function (Auth, $location) {
+  .controller('LoginCtrl', function ($scope, $location, Auth) {
     var vm = this;
     vm.user = {};
-    vm.errors = {};
 
     vm.login = function (form) {
+      $scope.$broadcast('show-errors-check-validity');
       if (form.$valid) {
         Auth.login({
           email: vm.user.email,
@@ -14,7 +14,7 @@ angular.module('scriba.account')
         }).then(function () {
           $location.path('/bookcase');
         }).catch(function (err) {
-          vm.errors.other = err.message;
+          form[err.field].$setValidity(err.message, false);
         });
       }
     };

@@ -17,10 +17,10 @@ exports.setup = function (User) {
         }
 
         if (!user) {
-          return done(null, false, {message: 'This email is not registered.'});
+          return done(null, false, {field: 'email', message: 'not_registered'});
         }
         if (!user.authenticate(password)) {
-          return done(null, false, {message: 'This password is not correct.'});
+          return done(null, false, {field: 'password', message: 'wrong'});
         }
         return done(null, user);
       });

@@ -18,7 +18,9 @@
                  ng-model="loginCtrl.user.email"
                  required
                  autofocus>
-          <error-messages field="loginForm.email"></error-messages>
+          <error-messages field="loginForm.email">
+            <p ng-message="not_registered">This email is not registered.</p>
+          </error-messages>
         </div>
       </div>
 
@@ -33,12 +35,10 @@
                  placeholder="Password"
                  ng-model="loginCtrl.user.password"
                  required>
-          <error-messages field="loginForm.password"></error-messages>
+          <error-messages field="loginForm.password">
+            <p ng-message="wrong">This password is not correct.</p>
+          </error-messages>
         </div>
-      </div>
-
-      <div class="form-group has-error">
-        <p class="help-block">{{ loginCtrl.errors.other }}</p>
       </div>
 
       <div>
