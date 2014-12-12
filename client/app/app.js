@@ -5,6 +5,7 @@ angular.module('scribaApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
+  'ngMessages',
   'ui.bootstrap',
   'ui.bootstrap.showErrors',
   'scriba.account',

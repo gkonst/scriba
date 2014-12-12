@@ -18,6 +18,7 @@
                  ng-model="loginCtrl.user.email"
                  required
                  autofocus>
+          <error-messages field="loginForm.email"></error-messages>
         </div>
       </div>
 
@@ -32,6 +33,7 @@
                  placeholder="Password"
                  ng-model="loginCtrl.user.password"
                  required>
+          <error-messages field="loginForm.password"></error-messages>
         </div>
       </div>
 
