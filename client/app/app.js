@@ -9,7 +9,6 @@ angular.module('scribaApp', [
   'ui.bootstrap',
   'ui.bootstrap.showErrors',
   'scriba.account',
-  'scriba.admin',
   'scriba.bookcase',
   'scriba.book'
 ])
