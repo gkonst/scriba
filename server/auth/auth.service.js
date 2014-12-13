@@ -61,18 +61,17 @@ exports.hasRole = function (roleRequired) {
 /**
  * Returns a jwt token signed by the app secret
  */
-exports.signToken = function (id) {
-  return jwt.sign({_id: id}, config.secrets.session, {expiresInMinutes: 60 * 5});
+var signToken = exports.signToken = function (id, role, expiresInMinutes) {
+  return jwt.sign({_id: id, role: role}, config.secrets.session, {expiresInMinutes: expiresInMinutes});
 };
 
 /**
  * Set token cookie directly for oAuth strategies
  */
-exports.setTokenCookie = function (req, res) {
+exports.setToken = function (req, res) {
   if (req.user) {
-    var token = exports.signToken(req.user._id, req.user.role);
-    res.cookie('token', JSON.stringify(token));
-    res.redirect('/');
+    var token = signToken(req.user._id, req.user.role, config.tokenDuration.session);
+    res.redirect('/login/' + token);
   } else {
     res.json(404, {message: 'Something went wrong, please try again.'});
   }

@@ -5,7 +5,7 @@ var _ = require('lodash');
 
 /*jshint unused:false */
 function requiredProcessEnv(name) {
-  if(!process.env[name]) {
+  if (!process.env[name]) {
     throw new Error('You must set the ' + name + ' environment variable');
   }
   return process.env[name];
@@ -30,6 +30,10 @@ var all = {
     session: 'scriba-secret'
   },
 
+  tokenDuration: {
+    session: 60 * 24 * 30
+  },
+
   // List of user roles
   userRoles: ['guest', 'user', 'admin'],
 
@@ -43,21 +47,21 @@ var all = {
   },
 
   facebook: {
-    clientID:     process.env.FACEBOOK_ID || 'id',
+    clientID: process.env.FACEBOOK_ID || 'id',
     clientSecret: process.env.FACEBOOK_SECRET || 'secret',
-    callbackURL:  (process.env.DOMAIN || '') + '/auth/facebook/callback'
+    callbackURL: (process.env.DOMAIN || '') + '/auth/facebook/callback'
   },
 
   twitter: {
-    clientID:     process.env.TWITTER_ID || 'id',
+    clientID: process.env.TWITTER_ID || 'id',
     clientSecret: process.env.TWITTER_SECRET || 'secret',
-    callbackURL:  (process.env.DOMAIN || '') + '/auth/twitter/callback'
+    callbackURL: (process.env.DOMAIN || '') + '/auth/twitter/callback'
   },
 
   google: {
-    clientID:     process.env.GOOGLE_ID || 'id',
+    clientID: process.env.GOOGLE_ID || 'id',
     clientSecret: process.env.GOOGLE_SECRET || 'secret',
-    callbackURL:  (process.env.DOMAIN || '') + '/auth/google/callback'
+    callbackURL: (process.env.DOMAIN || '') + '/auth/google/callback'
   }
 };
 

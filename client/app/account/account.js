@@ -6,6 +6,16 @@ angular.module('scriba.account', [])
       .when('/login', {
         templateUrl: 'app/account/login/login.html'
       })
+      .when('/login/:sessionToken', {
+        template: ' ',
+        controller: function ($routeParams, Auth, $location) {
+          if ($routeParams.sessionToken) {
+            Auth.setSessionToken($routeParams.sessionToken, function () {
+              $location.path('/');
+            });
+          }
+        }
+      })
       .when('/signup', {
         templateUrl: 'app/account/signup/signup.html'
       })
