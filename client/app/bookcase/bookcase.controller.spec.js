@@ -17,7 +17,7 @@ describe('Controller: BookcaseListCtrl', function () {
 
   it('should fetch list of bookcases', function () {
     // given
-    $httpBackend.expectGET('/api/bookcases')
+    $httpBackend.expectGET('/api/bookcase')
       .respond([{name: 'test1'}, {name: 'test2'}]);
 
     // when
@@ -49,7 +49,7 @@ describe('Controller: BookcaseDetailCtrl', function () {
   it('should save bookcase and close modal if form valid', function () {
     // given
     bookcaseDetailCtrl.bookcase = {name: 'test1'};
-    $httpBackend.expectPOST('/api/bookcases', {name: 'test1'})
+    $httpBackend.expectPOST('/api/bookcase', {name: 'test1'})
       .respond(201, {name: 'test1'});
 
     // when

@@ -4,11 +4,11 @@ require('chai').should();
 var app = require('../../app');
 var request = require('supertest');
 
-describe('GET /api/books', function () {
+describe('GET /api/book', function () {
 
   it('should respond with JSON array', function (done) {
     request(app)
-      .get('/api/books')
+      .get('/api/book')
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function (err, res) {

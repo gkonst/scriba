@@ -25,7 +25,7 @@ describe('Controller: BookListCtrl', function () {
   it('should fetch list of books for given bookcaseId', function () {
     // given
     routeParams = {bookcaseId: '123'};
-    $httpBackend.expectGET('/api/bookcases/123/books')
+    $httpBackend.expectGET('/api/bookcase/123/books')
       .respond([{name: 'test1'}, {name: 'test2'}]);
 
     // when

@@ -7,11 +7,11 @@ var Bookcase = require('./bookcase.model');
 
 var token = 'Bearer ' + require('../../auth/auth.service').signToken('017b043ad0386eab3d164673');
 
-describe('GET /api/bookcases', function () {
+describe('GET /api/bookcase', function () {
 
   it('should respond with JSON array', function (done) {
     request(app)
-      .get('/api/bookcases')
+      .get('/api/bookcase')
       .set('Authorization', token)
       .expect(200)
       .expect('Content-Type', /json/)
@@ -26,11 +26,11 @@ describe('GET /api/bookcases', function () {
   });
 });
 
-describe('GET /api/bookcases/{id}', function () {
+describe('GET /api/bookcase/{id}', function () {
 
   it('should respond with JSON object if found', function (done) {
     request(app)
-      .get('/api/bookcases/117b043ad0386eab3d164673')
+      .get('/api/bookcase/117b043ad0386eab3d164673')
       .set('Authorization', token)
       .expect(200)
       .expect('Content-Type', /json/)
@@ -47,7 +47,7 @@ describe('GET /api/bookcases/{id}', function () {
 
   it('should respond with 404 if not found', function (done) {
     request(app)
-      .get('/api/bookcases/997b043ad0386eab3d164673')
+      .get('/api/bookcase/997b043ad0386eab3d164673')
       .set('Authorization', token)
       .expect('Content-Type', /json/)
       .expect(404, done);
@@ -55,18 +55,18 @@ describe('GET /api/bookcases/{id}', function () {
 
   it('should respond with 403 if not own bookcase', function (done) {
     request(app)
-      .get('/api/bookcases/147b043ad0386eab3d164673')
+      .get('/api/bookcase/147b043ad0386eab3d164673')
       .set('Authorization', token)
       .expect('Content-Type', /json/)
       .expect(403, done);
   });
 });
 
-describe('GET /api/bookcases/{id}/books', function () {
+describe('GET /api/bookcase/{id}/books', function () {
 
   it('should respond with JSON array if bookcase exist and has books', function (done) {
     request(app)
-      .get('/api/bookcases/117b043ad0386eab3d164673/books/')
+      .get('/api/bookcase/117b043ad0386eab3d164673/books/')
       .set('Authorization', token)
       .expect(200)
       .expect('Content-Type', /json/)
@@ -82,7 +82,7 @@ describe('GET /api/bookcases/{id}/books', function () {
 
   it('should respond with empty JSON array if bookcase exist and has no books', function (done) {
     request(app)
-      .get('/api/bookcases/127b043ad0386eab3d164673/books/')
+      .get('/api/bookcase/127b043ad0386eab3d164673/books/')
       .set('Authorization', token)
       .expect(200)
       .expect('Content-Type', /json/)
@@ -98,7 +98,7 @@ describe('GET /api/bookcases/{id}/books', function () {
 
   it('should respond with 404 if bookcase not exist', function (done) {
     request(app)
-      .get('/api/bookcases/997b043ad0386eab3d164673/books/')
+      .get('/api/bookcase/997b043ad0386eab3d164673/books/')
       .set('Authorization', token)
       .expect('Content-Type', /json/)
       .expect(404, done);
@@ -106,18 +106,18 @@ describe('GET /api/bookcases/{id}/books', function () {
 
   it('should respond with 403 if not own bookcase', function (done) {
     request(app)
-      .get('/api/bookcases/147b043ad0386eab3d164673/books/')
+      .get('/api/bookcase/147b043ad0386eab3d164673/books/')
       .set('Authorization', token)
       .expect('Content-Type', /json/)
       .expect(403, done);
   });
 });
 
-describe('POST /api/bookcases', function () {
+describe('POST /api/bookcase', function () {
   it('should save bookcase and set current user in it', function (done) {
     var bookcase = {name: 'test'};
     request(app)
-      .post('/api/bookcases')
+      .post('/api/bookcase')
       .set('Authorization', token)
       .send(bookcase)
       .expect(201)
@@ -133,11 +133,11 @@ describe('POST /api/bookcases', function () {
   })
 });
 
-describe('PUT /api/bookcases/{id}', function () {
+describe('PUT /api/bookcase/{id}', function () {
   it('should update bookcase', function (done) {
     var bookcase = {name: 'test'};
     request(app)
-      .put('/api/bookcases/137b043ad0386eab3d164673')
+      .put('/api/bookcase/137b043ad0386eab3d164673')
       .set('Authorization', token)
       .send(bookcase)
       .expect(200)
@@ -155,7 +155,7 @@ describe('PUT /api/bookcases/{id}', function () {
 
   it('should respond with 404 if bookcase not exist', function (done) {
     request(app)
-      .put('/api/bookcases/997b043ad0386eab3d164673')
+      .put('/api/bookcase/997b043ad0386eab3d164673')
       .set('Authorization', token)
       .expect('Content-Type', /json/)
       .expect(404, done);
@@ -163,17 +163,17 @@ describe('PUT /api/bookcases/{id}', function () {
 
   it('should respond with 403 if not own bookcase', function (done) {
     request(app)
-      .put('/api/bookcases/147b043ad0386eab3d164673')
+      .put('/api/bookcase/147b043ad0386eab3d164673')
       .set('Authorization', token)
       .expect('Content-Type', /json/)
       .expect(403, done);
   });
 });
 
-describe('DELETE /api/bookcases/{id}', function () {
+describe('DELETE /api/bookcase/{id}', function () {
   it('should delete bookcase', function (done) {
     request(app)
-      .delete('/api/bookcases/137b043ad0386eab3d164673')
+      .delete('/api/bookcase/137b043ad0386eab3d164673')
       .set('Authorization', token)
       .expect(204)
       .end(function (err) {
@@ -192,7 +192,7 @@ describe('DELETE /api/bookcases/{id}', function () {
 
   it('should respond with 404 if bookcase not exist', function (done) {
     request(app)
-      .delete('/api/bookcases/997b043ad0386eab3d164673')
+      .delete('/api/bookcase/997b043ad0386eab3d164673')
       .set('Authorization', token)
       .expect('Content-Type', /json/)
       .expect(404, done);
@@ -200,7 +200,7 @@ describe('DELETE /api/bookcases/{id}', function () {
 
   it('should respond with 403 if not own bookcase', function (done) {
     request(app)
-      .delete('/api/bookcases/147b043ad0386eab3d164673')
+      .delete('/api/bookcase/147b043ad0386eab3d164673')
       .set('Authorization', token)
       .expect('Content-Type', /json/)
       .expect(403, done);
