@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scriba.book')
-  .service('BookService', function ($resource) {
-    return $resource('/api/books/:bookId');
+  .factory('Book', function ($resource) {
+    return $resource('/api/books/:id');
   });
 

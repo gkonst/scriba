@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('scriba.bookcase')
-  .controller('BookcaseListCtrl', function ($modal, $log, BookcaseService) {
+  .controller('BookcaseListCtrl', function ($modal, $log, Bookcase) {
     var data = this;
 
     function refresh() {
-      data.bookcases = BookcaseService.query();
+      data.bookcases = Bookcase.query();
     }
 
     this.add = function () {
@@ -22,12 +22,12 @@ angular.module('scriba.bookcase')
 
     refresh();
   })
-  .controller('BookcaseDetailCtrl', function ($modalInstance, BookcaseService) {
+  .controller('BookcaseDetailCtrl', function ($modalInstance, Bookcase) {
     this.bookcase = {};
 
     this.save = function (bookcaseForm) {
       if (bookcaseForm.$valid) {
-        BookcaseService.save(this.bookcase, function () {
+        Bookcase.save(this.bookcase, function () {
           $modalInstance.close();
         });
       }

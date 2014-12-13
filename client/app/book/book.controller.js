@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('scriba.book')
-  .controller('BookListCtrl', function ($log, $modal, $routeParams, BookcaseService) {
+  .controller('BookListCtrl', function ($log, $modal, $routeParams, Bookcase) {
     var data = this;
 
     data.bookcaseId = $routeParams.bookcaseId;
 
     function refresh() {
-      data.books = BookcaseService.queryBooks({bookcaseId: data.bookcaseId});
+      data.books = Bookcase.queryBooks({id: data.bookcaseId});
     }
 
     this.add = function () {
@@ -29,7 +29,7 @@ angular.module('scriba.book')
 
     refresh();
   })
-  .controller('BookDetailCtrl', function ($modalInstance, BookService, bookcaseId) {
+  .controller('BookDetailCtrl', function ($modalInstance, Book, bookcaseId) {
     this.book = {
       bookcase: bookcaseId,
       shelf: 1,
@@ -38,7 +38,7 @@ angular.module('scriba.book')
 
     this.save = function (bookForm) {
       if (bookForm.$valid) {
-        BookService.save(this.book, function () {
+        Book.save(this.book, function () {
           $modalInstance.close();
         });
       }
