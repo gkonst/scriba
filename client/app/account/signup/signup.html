@@ -4,7 +4,7 @@
       <h1>Sign up</h1>
       <br/>
     </div>
-    <form class="form-horizontal" role="form" name="signupForm" ng-submit="signupCtrl.register(signupForm)" novalidate>
+    <form class="form-horizontal" role="form" name="form" ng-submit="signupCtrl.register(form)" novalidate>
       <div class="form-group" show-errors>
         <label for="name" class="control-label col-md-1">Name</label>
 
@@ -16,7 +16,7 @@
                  ng-model="signupCtrl.user.name"
                  required
                  autofocus>
-          <error-messages field="signupForm.name"></error-messages>
+          <error-messages field="form.name"></error-messages>
         </div>
       </div>
 
@@ -30,7 +30,7 @@
                  class="form-control"
                  ng-model="signupCtrl.user.email"
                  required>
-          <error-messages field="signupForm.email">
+          <error-messages field="form.email">
             <p ng-message="unique" valid-on-change>The specified email address is already in use.</p>
           </error-messages>
         </div>
@@ -46,7 +46,7 @@
                  class="form-control"
                  ng-model="signupCtrl.user.password"
                  required>
-          <error-messages field="signupForm.password"></error-messages>
+          <error-messages field="form.password"></error-messages>
         </div>
       </div>
 

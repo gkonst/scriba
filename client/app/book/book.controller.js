@@ -2,22 +2,22 @@
 
 angular.module('scriba.book')
   .controller('BookListCtrl', function ($log, $modal, $routeParams, Bookcase) {
-    var data = this;
+    var vm = this;
 
-    data.bookcaseId = $routeParams.bookcaseId;
+    vm.bookcaseId = $routeParams.bookcaseId;
 
     function refresh() {
-      data.books = Bookcase.queryBooks({id: data.bookcaseId});
+      vm.books = Bookcase.queryBooks({id: vm.bookcaseId});
     }
 
-    this.add = function () {
+    vm.add = function () {
       var modalInstance = $modal.open({
         templateUrl: 'app/book/book.detail.html',
         controller: 'BookDetailCtrl',
         controllerAs: 'bookDetailCtrl',
         resolve: {
           bookcaseId: function () {
-            return data.bookcaseId;
+            return vm.bookcaseId;
           }
         }
       });
@@ -30,21 +30,23 @@ angular.module('scriba.book')
     refresh();
   })
   .controller('BookDetailCtrl', function ($modalInstance, Book, bookcaseId) {
-    this.book = {
+    var vm = this;
+
+    vm.book = {
       bookcase: bookcaseId,
       shelf: 1,
       line: 1
     };
 
-    this.save = function (bookForm) {
+    vm.save = function (bookForm) {
       if (bookForm.$valid) {
-        Book.save(this.book, function () {
+        Book.save(vm.book, function () {
           $modalInstance.close();
         });
       }
     };
 
-    this.cancel = function () {
+    vm.cancel = function () {
       $modalInstance.dismiss('cancel');
     };
   });

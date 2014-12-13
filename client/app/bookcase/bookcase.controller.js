@@ -2,13 +2,13 @@
 
 angular.module('scriba.bookcase')
   .controller('BookcaseListCtrl', function ($modal, $log, Bookcase) {
-    var data = this;
+    var vm = this;
 
     function refresh() {
-      data.bookcases = Bookcase.query();
+      vm.bookcases = Bookcase.query();
     }
 
-    this.add = function () {
+    vm.add = function () {
       var modalInstance = $modal.open({
         templateUrl: 'app/bookcase/bookcase.detail.html',
         controller: 'BookcaseDetailCtrl',
@@ -23,17 +23,18 @@ angular.module('scriba.bookcase')
     refresh();
   })
   .controller('BookcaseDetailCtrl', function ($modalInstance, Bookcase) {
-    this.bookcase = {};
+    var vm = this;
+    vm.bookcase = {};
 
-    this.save = function (bookcaseForm) {
+    vm.save = function (bookcaseForm) {
       if (bookcaseForm.$valid) {
-        Bookcase.save(this.bookcase, function () {
+        Bookcase.save(vm.bookcase, function () {
           $modalInstance.close();
         });
       }
     };
 
-    this.cancel = function () {
+    vm.cancel = function () {
       $modalInstance.dismiss('cancel');
     };
   });

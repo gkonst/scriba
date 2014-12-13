@@ -4,7 +4,7 @@
       <h1>Login</h1>
     </div>
     <br/>
-    <form class="form-horizontal" name="loginForm" role="form" ng-submit="loginCtrl.login(loginForm)" novalidate>
+    <form class="form-horizontal" name="form" role="form" ng-submit="loginCtrl.login(form)" novalidate>
       <div class="form-group" show-errors>
         <label for="email" class="col-md-1 control-label">Email</label>
 
@@ -17,7 +17,7 @@
                  ng-model="loginCtrl.user.email"
                  required
                  autofocus>
-          <error-messages field="loginForm.email">
+          <error-messages field="form.email">
             <p ng-message="not_registered" valid-on-change>This email is not registered.</p>
           </error-messages>
         </div>
@@ -34,7 +34,7 @@
                  placeholder="Password"
                  ng-model="loginCtrl.user.password"
                  required>
-          <error-messages field="loginForm.password">
+          <error-messages field="form.password">
             <p ng-message="wrong" valid-on-change>This password is not correct.</p>
           </error-messages>
         </div>
