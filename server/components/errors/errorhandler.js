@@ -11,7 +11,8 @@ module.exports = function (app) {
     res.status(status);
     res.send({
       status: status,
-      error: err.message
+      message: err.message,
+      code: err.code
     });
   });
 };

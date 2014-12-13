@@ -1,35 +1,43 @@
-<div class="container">
+<div class="container" ng-controller="SettingsCtrl as settingsCtrl">
   <div class="row">
     <div class="col-sm-12">
       <h1>Change Password</h1>
     </div>
     <div class="col-sm-12">
-      <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+      <form class="form-horizontal" name="form" role="form" ng-submit="settingsCtrl.changePassword(form)" novalidate>
 
-        <div class="form-group">
-          <label>Current Password</label>
+        <div class="form-group" show-errors>
+          <label for="oldPassword" class="col-md-2 control-label">Current Password</label>
 
-          <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
-                 mongoose-error/>
-          <p class="help-block" ng-show="form.password.$error.mongoose">
-              {{ errors.other }}
-          </p>
+          <div class="col-md-4">
+            <input id="oldPassword"
+                   type="password"
+                   name="oldPassword"
+                   class="form-control"
+                   ng-model="settingsCtrl.user.oldPassword"
+                   required
+                   autofocus>
+            <error-messages field="form.oldPassword">
+              <p ng-message="forbidden">This password is not correct.</p>
+            </error-messages>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label>New Password</label>
+        <div class="form-group" show-errors>
+          <label for="newPassword" class="col-md-2 control-label">New Password</label>
 
-          <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
-                 ng-minlength="3"
-                 required/>
-          <p class="help-block"
-             ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
-            Password must be at least 3 characters.
-          </p>
+          <div class="col-md-4">
+            <input id="newPassword"
+                   type="password"
+                   name="newPassword"
+                   class="form-control"
+                   ng-model="settingsCtrl.user.newPassword"
+                   ng-minlength="3"
+                   required>
+            <error-messages field="form.newPassword"></error-messages>
+          </div>
         </div>
-
-        <p class="help-block"> {{ message }} </p>
-
+        <p class="help-block" ng-show="settingsCtrl.done">Password successfully changed.</p>
         <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
       </form>
     </div>

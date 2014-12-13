@@ -3,6 +3,7 @@
 var User = require('./user.model');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var ForbiddenError = require('../../components/errors/forbidden.error');
 
 var validationError = function (res, err) {
   return res.json(422, err);
@@ -70,7 +71,7 @@ exports.destroy = function (req, res) {
 /**
  * Change a users password
  */
-exports.changePassword = function (req, res) {
+exports.changePassword = function (req, res, next) {
   var userId = req.user._id;
   var oldPass = String(req.body.oldPassword);
   var newPass = String(req.body.newPassword);
@@ -85,7 +86,7 @@ exports.changePassword = function (req, res) {
         res.send(200);
       });
     } else {
-      res.send(403);
+      next(new ForbiddenError());
     }
   });
 };
