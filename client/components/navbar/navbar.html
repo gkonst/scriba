@@ -14,7 +14,6 @@
         <li ng-repeat="item in navbarCtrl.menu" ng-class="{active: navbarCtrl.isActive(item.link)}">
           <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
-        <li ng-show="navbarCtrl.isAdmin()" ng-class="{active: navbarCtrl.isActive('/admin')}"><a href="/admin">Admin</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">

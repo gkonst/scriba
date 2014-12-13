@@ -9,7 +9,6 @@ angular.module('scribaApp')
 
     this.isCollapsed = true;
     this.isLoggedIn = Auth.isLoggedIn;
-    this.isAdmin = Auth.isAdmin;
     this.getCurrentUser = Auth.getCurrentUser;
 
     this.toggle = function () {

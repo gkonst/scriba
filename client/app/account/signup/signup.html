@@ -31,7 +31,7 @@
                  ng-model="signupCtrl.user.email"
                  required>
           <error-messages field="signupForm.email">
-            <p ng-message="unique">The specified email address is already in use.</p>
+            <p ng-message="unique" valid-on-change>The specified email address is already in use.</p>
           </error-messages>
         </div>
       </div>

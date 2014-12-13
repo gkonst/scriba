@@ -8,11 +8,7 @@ angular.module('scriba.account')
     vm.register = function (form) {
       $scope.$broadcast('show-errors-check-validity');
       if (form.$valid) {
-        Auth.createUser({
-          name: vm.user.name,
-          email: vm.user.email,
-          password: vm.user.password
-        })
+        Auth.createUser(vm.user)
           .then(function () {
             $location.path('/');
           })

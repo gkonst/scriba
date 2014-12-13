@@ -5,7 +5,6 @@
     </div>
     <br/>
     <form class="form-horizontal" name="loginForm" role="form" ng-submit="loginCtrl.login(loginForm)" novalidate>
-
       <div class="form-group" show-errors>
         <label for="email" class="col-md-1 control-label">Email</label>
 
@@ -19,7 +18,7 @@
                  required
                  autofocus>
           <error-messages field="loginForm.email">
-            <p ng-message="not_registered">This email is not registered.</p>
+            <p ng-message="not_registered" valid-on-change>This email is not registered.</p>
           </error-messages>
         </div>
       </div>
@@ -36,7 +35,7 @@
                  ng-model="loginCtrl.user.password"
                  required>
           <error-messages field="loginForm.password">
-            <p ng-message="wrong">This password is not correct.</p>
+            <p ng-message="wrong" valid-on-change>This password is not correct.</p>
           </error-messages>
         </div>
       </div>

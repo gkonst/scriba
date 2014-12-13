@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scriba.account', [])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $httpProvider) {
     $routeProvider
       .when('/login', {
         templateUrl: 'app/account/login/login.html'
@@ -20,8 +20,18 @@ angular.module('scriba.account', [])
         templateUrl: 'app/account/signup/signup.html'
       })
       .when('/settings', {
-        templateUrl: 'app/account/settings/settings.html',
-        controller: 'SettingsCtrl',
-        authenticate: true
+        templateUrl: 'app/account/settings/settings.html'
       });
+
+    $httpProvider.interceptors.push('AuthInterceptor');
+  })
+  .run(function ($rootScope, $location, Auth) {
+    // Redirect to login if route requires auth and you're not logged in
+    $rootScope.$on('$routeChangeStart', function (event, next) {
+      Auth.isLoggedInAsync(function (loggedIn) {
+        if (next.authenticate && !loggedIn) {
+          $location.path('/login');
+        }
+      });
+    });
   });
