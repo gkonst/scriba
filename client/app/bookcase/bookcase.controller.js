@@ -47,13 +47,9 @@ angular.module('scriba.bookcase')
     vm.save = function (bookcaseForm) {
       if (bookcaseForm.$valid) {
         if (angular.isDefined(vm.bookcase._id)) {
-          Bookcase.update({id: id}, vm.bookcase, function () {
-            $modalInstance.close();
-          });
+          Bookcase.update({id: vm.bookcase._id}, vm.bookcase, $modalInstance.close);
         } else {
-          Bookcase.save(vm.bookcase, function () {
-            $modalInstance.close();
-          });
+          Bookcase.save(vm.bookcase, $modalInstance.close);
         }
       }
     };
