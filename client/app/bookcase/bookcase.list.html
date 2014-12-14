@@ -21,7 +21,15 @@
       <td><a ng-href="/bookcase/{{bookcase._id}}/books">{{bookcase.name}}</a></td>
       <td>{{bookcase.info}}</td>
       <td>{{bookcase.location}}</td>
-      <td><a ng-click="bookcaseListCtrl.remove(bookcase.name, bookcase._id)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
+      <td>
+        <span class="pull-right">
+        <a ng-click="bookcaseListCtrl.edit(bookcase._id)"
+           class="edit"
+           title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+        <a ng-click="bookcaseListCtrl.remove(bookcase.name, bookcase._id)"
+           class="trash"
+           title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+          </span>
       </td>
     </tr>
     </tbody>

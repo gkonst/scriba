@@ -8,17 +8,22 @@ angular.module('scriba.bookcase')
       vm.bookcases = Bookcase.query();
     }
 
-    vm.add = function () {
-      var modalInstance = $modal.open({
+    function detail(id) {
+      $modal.open({
         templateUrl: 'app/bookcase/bookcase.detail.html',
         controller: 'BookcaseDetailCtrl',
-        controllerAs: 'bookcaseDetailCtrl'
-      });
+        controllerAs: 'bookcaseDetailCtrl',
+        resolve: {
+          id: function () {
+            return id;
+          }
+        }
+      }).result.then(function () {
+          refresh();
+        });
+    }
 
-      modalInstance.result.then(function () {
-        refresh();
-      });
-    };
+    vm.add = vm.edit = detail;
 
     vm.remove = Modal.confirm.delete(function (id) {
       Bookcase.remove({id: id}, function () {
@@ -28,19 +33,33 @@ angular.module('scriba.bookcase')
 
     refresh();
   })
-  .controller('BookcaseDetailCtrl', function ($modalInstance, Bookcase) {
+  .controller('BookcaseDetailCtrl', function ($log, $modalInstance, Bookcase, id) {
     var vm = this;
-    vm.bookcase = {};
+
+    if (angular.isDefined(id)) {
+      $log.debug('Editing bookcase with id:', id);
+      vm.bookcase = Bookcase.get({id: id});
+    } else {
+      $log.debug('Creating new bookcase');
+      vm.bookcase = {};
+    }
 
     vm.save = function (bookcaseForm) {
       if (bookcaseForm.$valid) {
-        Bookcase.save(vm.bookcase, function () {
-          $modalInstance.close();
-        });
+        if (angular.isDefined(vm.bookcase._id)) {
+          Bookcase.update({id: id}, vm.bookcase, function () {
+            $modalInstance.close();
+          });
+        } else {
+          Bookcase.save(vm.bookcase, function () {
+            $modalInstance.close();
+          });
+        }
       }
     };
 
     vm.cancel = function () {
       $modalInstance.dismiss('cancel');
     };
-  });
+  }
+);
