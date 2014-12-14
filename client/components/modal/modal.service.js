@@ -33,7 +33,7 @@ angular.module('scribaApp')
          * @param  {Function} del - callback, ran when delete is confirmed
          * @return {Function}     - the function to open the modal (ex. myModalFn)
          */
-        delete: function(del) {
+        delete: function (del) {
           del = del || angular.noop;
 
           /**
@@ -41,10 +41,10 @@ angular.module('scribaApp')
            * @param  {String} name   - name or info to show on modal
            * @param  {All}           - any additional args are passed staight to del callback
            */
-          return function() {
+          return function () {
             var args = Array.prototype.slice.call(arguments),
-                name = args.shift(),
-                deleteModal;
+              name = args.shift(),
+              deleteModal;
 
             deleteModal = openModal({
               modal: {
@@ -54,20 +54,20 @@ angular.module('scribaApp')
                 buttons: [{
                   classes: 'btn-danger',
                   text: 'Delete',
-                  click: function(e) {
+                  click: function (e) {
                     deleteModal.close(e);
                   }
                 }, {
                   classes: 'btn-default',
                   text: 'Cancel',
-                  click: function(e) {
+                  click: function (e) {
                     deleteModal.dismiss(e);
                   }
                 }]
               }
             }, 'modal-danger');
 
-            deleteModal.result.then(function(event) {
+            deleteModal.result.then(function (event) {
               del.apply(event, args);
             });
           };

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scriba.bookcase')
-  .controller('BookcaseListCtrl', function ($modal, $log, Bookcase) {
+  .controller('BookcaseListCtrl', function ($modal, $log, Modal, Bookcase) {
     var vm = this;
 
     function refresh() {
@@ -19,6 +19,12 @@ angular.module('scriba.bookcase')
         refresh();
       });
     };
+
+    vm.remove = Modal.confirm.delete(function (id) {
+      Bookcase.remove({id: id}, function () {
+        refresh();
+      });
+    });
 
     refresh();
   })
