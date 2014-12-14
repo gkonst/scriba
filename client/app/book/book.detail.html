@@ -1,37 +1,76 @@
 <div>
-  <form name="bookForm" class="form-horizontal" role="form" ng-submit="bookDetailCtrl.save(bookForm)" novalidate>
+  <form name="form" class="form-horizontal" role="form" ng-submit="bookDetailCtrl.save(form)" novalidate>
     <div class="modal-header">
       <h3 class="modal-title">New book</h3>
     </div>
     <div class="modal-body">
-      <form-input id="name"
-                  label="Name"
-                  ng-model="bookDetailCtrl.book.name"
-                  required="true"></form-input>
-      <form-input id="author"
-                  label="Author"
-                  ng-model="bookDetailCtrl.book.author"
-                  required="true"></form-input>
-      <div class="form-group">
-        <label for="input-desc" class="col-sm-2 control-label">Description</label>
+      <div class="form-group" show-errors>
+        <label for="name" class="control-label col-md-2">Name</label>
 
-        <div class="col-sm-10">
+        <div class="col-md-4">
+          <input id="name"
+                 name="name"
+                 type="text"
+                 class="form-control"
+                 ng-model="bookDetailCtrl.book.name"
+                 required
+                 autofocus>
+          <error-messages field="form.name"></error-messages>
+        </div>
+      </div>
+
+      <div class="form-group" show-errors>
+        <label for="author" class="control-label col-md-2">Author</label>
+
+        <div class="col-md-4">
+          <input id="author"
+                 name="author"
+                 type="text"
+                 class="form-control"
+                 ng-model="bookDetailCtrl.book.author"
+                 required>
+          <error-messages field="form.author"></error-messages>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="input-desc" class="col-md-2 control-label">Description</label>
+
+        <div class="col-md-10">
           <textarea class="form-control" id="input-desc" placeholder="Description" ng-model="bookDetailCtrl.book.info"></textarea>
         </div>
       </div>
-      <form-input id="shelf"
-                  label="Shelf"
-                  type="number"
-                  ng-model="bookDetailCtrl.book.shelf"
-                  required="true"></form-input>
-      <form-input id="line"
-                  label="Line"
-                  type="number"
-                  ng-model="bookDetailCtrl.book.line"
-                  required="true"></form-input>
+
+      <div class="form-group" show-errors>
+        <label for="shelf" class="control-label col-md-2">Shelf</label>
+
+        <div class="col-md-4">
+          <input id="shelf"
+                 name="shelf"
+                 type="number"
+                 class="form-control"
+                 ng-model="bookDetailCtrl.book.shelf"
+                 required>
+          <error-messages field="form.shelf"></error-messages>
+        </div>
+      </div>
+
+      <div class="form-group" show-errors>
+        <label for="line" class="control-label col-md-2">Line</label>
+
+        <div class="col-md-4">
+          <input id="line"
+                 name="line"
+                 type="number"
+                 class="form-control"
+                 ng-model="bookDetailCtrl.book.line"
+                 required>
+          <error-messages field="form.line"></error-messages>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-primary" type="submit" ng-disabled="bookForm.$invalid">Save</button>
+      <button class="btn btn-primary" type="submit" ng-disabled="form.$invalid">Save</button>
       <button class="btn btn-warning" ng-click="bookDetailCtrl.cancel()">Cancel</button>
     </div>
   </form>
