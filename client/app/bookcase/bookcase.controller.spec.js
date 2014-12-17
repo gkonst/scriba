@@ -3,13 +3,24 @@
 describe('Controller: BookcaseListCtrl', function () {
   beforeEach(module('scriba.bookcase'));
 
-  var bookcaseListCtrl, $httpBackend, modalMock;
+  var sut, $httpBackend, scope, modalMock, deleteConfirmed;
 
   beforeEach(inject(function (_$httpBackend_, $controller) {
     $httpBackend = _$httpBackend_;
-    modalMock = {confirm: {delete: sinon.spy()}};
-    bookcaseListCtrl = $controller('BookcaseListCtrl', {
-      Modal: modalMock
+    modalMock = {
+      confirm: {
+        delete: function (callback) {
+          return function (name, id) {
+            if (deleteConfirmed) {
+              callback(id);
+            }
+          };
+        }
+      }
+    };
+    sut = $controller('BookcaseListCtrl', {
+      Modal: modalMock,
+      $scope: scope
     });
   }));
 
@@ -27,16 +38,48 @@ describe('Controller: BookcaseListCtrl', function () {
     $httpBackend.flush();
 
     // then
-    bookcaseListCtrl.bookcases.should.have.length(2);
+    sut.bookcases.should.have.length(2);
   });
 
-  // TODO add more test for add, edit and remove
+  it('should remove bookcase and refresh if confirmed', function () {
+    // given
+    var id = 'testId';
+    deleteConfirmed = true;
+    $httpBackend.expectGET('/api/bookcase')
+      .respond([{name: 'test1'}, {name: 'test2'}]);
+    $httpBackend.expectDELETE('/api/bookcase/testId')
+      .respond();
+    $httpBackend.expectGET('/api/bookcase')
+      .respond([{name: 'test1'}]);
+
+    // when
+    sut.remove('name', id);
+    $httpBackend.flush();
+
+    // then
+    sut.bookcases.should.have.length(1);
+  });
+
+  it('should not remove bookcase and if not confirmed', function () {
+    // given
+    var id = 'testId';
+    deleteConfirmed = false;
+    $httpBackend.expectGET('/api/bookcase')
+      .respond([{name: 'test1'}, {name: 'test2'}]);
+
+    // when
+    sut.remove('name', id);
+    $httpBackend.flush();
+
+    // then
+    sut.bookcases.should.have.length(2);
+  });
 });
 
 describe('Controller: BookcaseDetailCtrl', function () {
   beforeEach(module('scriba.bookcase'));
 
-  var bookcaseDetailCtrl, $httpBackend, $controller, modalInstanceMock, id;
+  var sut, $httpBackend, $controller, modalInstanceMock, id;
 
   beforeEach(inject(function (_$httpBackend_, _$controller_) {
     $httpBackend = _$httpBackend_;
@@ -51,7 +94,7 @@ describe('Controller: BookcaseDetailCtrl', function () {
   });
 
   function initCtrl() {
-    bookcaseDetailCtrl = $controller('BookcaseDetailCtrl', {
+    sut = $controller('BookcaseDetailCtrl', {
       $modalInstance: modalInstanceMock,
       id: id
     });
@@ -65,7 +108,7 @@ describe('Controller: BookcaseDetailCtrl', function () {
     initCtrl();
 
     // then
-    bookcaseDetailCtrl.bookcase.should.not.be.undefined;
+    sut.bookcase.should.not.be.undefined;
   });
 
   it('should fetch bookcase if id defined', function () {
@@ -80,20 +123,20 @@ describe('Controller: BookcaseDetailCtrl', function () {
     $httpBackend.flush();
 
     // then
-    bookcaseDetailCtrl.bookcase.name.should.equal(bookcase.name);
-    bookcaseDetailCtrl.bookcase._id.should.equal(bookcase._id);
+    sut.bookcase.name.should.equal(bookcase.name);
+    sut.bookcase._id.should.equal(bookcase._id);
 
   });
 
   it('should save new bookcase and close modal if form valid and _id undefined', function () {
     // given
     initCtrl();
-    bookcaseDetailCtrl.bookcase = {name: 'test1'};
+    sut.bookcase = {name: 'test1'};
     $httpBackend.expectPOST('/api/bookcase', {name: 'test1'})
       .respond(201, {name: 'test1'});
 
     // when
-    bookcaseDetailCtrl.save({$valid: true});
+    sut.save({$valid: true});
     $httpBackend.flush();
 
     // then
@@ -103,12 +146,12 @@ describe('Controller: BookcaseDetailCtrl', function () {
   it('should update bookcase and close modal if form valid and _id defined', function () {
     // given
     initCtrl();
-    bookcaseDetailCtrl.bookcase = {_id: 'testId', name: 'test2'};
+    sut.bookcase = {_id: 'testId', name: 'test2'};
     $httpBackend.expectPUT('/api/bookcase/testId', {_id: 'testId', name: 'test2'})
       .respond(201, {_id: 'testId', name: 'test2'});
 
     // when
-    bookcaseDetailCtrl.save({$valid: true});
+    sut.save({$valid: true});
     $httpBackend.flush();
 
     // then
@@ -117,10 +160,10 @@ describe('Controller: BookcaseDetailCtrl', function () {
 
   it('should not save bookcase and close modal if form invalid', function () {
     // given
-    bookcaseDetailCtrl.bookcase = {name: 'test1'};
+    sut.bookcase = {name: 'test1'};
 
     // when
-    bookcaseDetailCtrl.save({$valid: false});
+    sut.save({$valid: false});
 
     // then
     modalInstanceMock.close.should.not.have.been.called;
