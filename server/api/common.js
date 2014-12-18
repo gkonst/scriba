@@ -9,15 +9,15 @@ var nextIfErr = exports.nextIfErr = function (req, res, next, successCallback) {
     if (err) {
       next(err);
     } else if (_.isFunction(successCallback)) {
-      successCallback(req, res, next, result);
+      successCallback(result, next, res, req);
     }
   }
 };
 
 var notFoundIfEmpty = exports.notFoundIfEmpty = function (foundCallback) {
-  return function (req, res, next, result) {
+  return function (result, next, res, req) {
     if (result && _.isFunction(foundCallback)) {
-      foundCallback(req, res, next, result);
+      foundCallback(result, next, res, req);
     } else {
       next(new NotFoundError());
     }
@@ -25,9 +25,9 @@ var notFoundIfEmpty = exports.notFoundIfEmpty = function (foundCallback) {
 };
 
 var forbiddenIfRestricted = exports.forbiddenIfRestricted = function (permittedCallback) {
-  return function (req, res, next, result) {
+  return function (result, next, res, req) {
     if (result.user && String(result.user) === req.user.id) {
-      permittedCallback(req, res, next, result);
+      permittedCallback(result, next, res, req);
     } else {
       next(new ForbiddenError());
     }
@@ -35,7 +35,7 @@ var forbiddenIfRestricted = exports.forbiddenIfRestricted = function (permittedC
 };
 
 var resultAsJson = exports.resultAsJson = function (status) {
-  return function (req, res, next, result) {
+  return function (result, next, res) {
     res.status(status || 200).json(result);
   }
 };
@@ -82,7 +82,7 @@ exports.update = function (model) {
     model.findById(req.params.id,
       nextIfErr(req, res, next,
         notFoundIfEmpty(
-          forbiddenIfRestricted(function (req, res, next, result) {
+          forbiddenIfRestricted(function (result, next, res, req) {
             var updated = _.merge(result, req.body);
             updated.save(
               nextIfErr(req, res, next,
@@ -97,7 +97,7 @@ exports.destroy = function (model) {
     model.findById(req.params.id,
       nextIfErr(req, res, next,
         notFoundIfEmpty(
-          forbiddenIfRestricted(function (req, res, next, result) {
+          forbiddenIfRestricted(function (result, next, res, req) {
             result.remove(
               nextIfErr(req, res, next,
                 resultAsJson(204)));

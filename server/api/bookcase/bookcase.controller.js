@@ -15,7 +15,7 @@ exports.showBooks = function (req, res, next) {
     common.nextIfErr(req, res, next,
       common.notFoundIfEmpty(
         common.forbiddenIfRestricted(
-          function (req, res, next, result) {
+          function (result, next, res, req) {
             Book.find({bookcase: result.id},
               common.nextIfErr(req, res, next,
                 common.resultAsJson()));
