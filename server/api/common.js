@@ -4,13 +4,23 @@ var _ = require('lodash');
 var NotFoundError = require('../components/errors/notfound.error');
 var ForbiddenError = require('../components/errors/forbidden.error');
 
-var nextIfErr = exports.nextIfErr = function (req, res, next, successCallback) {
+var nextIfErr = function (req, res, next, successCallback) {
   return function (err, result) {
     if (err) {
       next(err);
     } else if (_.isFunction(successCallback)) {
       successCallback(result, next, res, req);
     }
+  }
+};
+
+exports.nextIfErr = function () {
+  if (arguments.length === 4) {
+    return nextIfErr.apply(this, arguments);
+  } else if (arguments.length === 2) {
+    return nextIfErr(undefined, undefined, arguments[0], arguments[1]);
+  } else {
+    throw new Error('Wrong number of arguments for nextIfErr: ' + arguments.length);
   }
 };
 

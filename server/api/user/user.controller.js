@@ -25,7 +25,7 @@ exports.changePassword = function (req, res, next) {
   User.findById(userId, function (err, user) {
     if (user.authenticate(oldPass)) {
       user.password = newPass;
-      user.save(common.nextIfErr(req, res, next, function () {
+      user.save(common.nextIfErr(next, function () {
         res.status(200);
       }));
     } else {
@@ -38,7 +38,7 @@ exports.me = function (req, res, next) {
   var userId = req.user._id;
   User.findOne({
     _id: userId
-  }, '-salt -hashedPassword', common.nextIfErr(req, res, next, function (user) {
+  }, '-salt -hashedPassword', common.nextIfErr(next, function (user) {
     if (user) {
       res.json(user);
     } else {
