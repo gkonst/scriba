@@ -9,22 +9,6 @@ var validationError = function (res, err) {
   return res.json(422, err);
 };
 
-/**
- * Get list of users
- * restriction: 'admin'
- */
-exports.index = function (req, res) {
-  User.find({}, '-salt -hashedPassword', function (err, users) {
-    if (err) {
-      return res.status(500).send(err);
-    }
-    res.status(200).json(users);
-  });
-};
-
-/**
- * Creates a new user
- */
 exports.create = function (req, res) {
   var newUser = new User(req.body);
   newUser.provider = 'local';
@@ -38,9 +22,6 @@ exports.create = function (req, res) {
   });
 };
 
-/**
- * Get a single user
- */
 exports.show = function (req, res, next) {
   var userId = req.params.id;
 
@@ -55,22 +36,6 @@ exports.show = function (req, res, next) {
   });
 };
 
-/**
- * Deletes a user
- * restriction: 'admin'
- */
-exports.destroy = function (req, res) {
-  User.findByIdAndRemove(req.params.id, function (err) {
-    if (err) {
-      return res.send(500, err);
-    }
-    return res.send(204);
-  });
-};
-
-/**
- * Change a users password
- */
 exports.changePassword = function (req, res, next) {
   var userId = req.user._id;
   var oldPass = String(req.body.oldPassword);
@@ -91,9 +56,6 @@ exports.changePassword = function (req, res, next) {
   });
 };
 
-/**
- * Get my info
- */
 exports.me = function (req, res, next) {
   var userId = req.user._id;
   User.findOne({
@@ -107,11 +69,4 @@ exports.me = function (req, res, next) {
     }
     res.json(user);
   });
-};
-
-/**
- * Authentication callback
- */
-exports.authCallback = function (req, res) {
-  res.redirect('/');
 };
