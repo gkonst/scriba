@@ -16,9 +16,9 @@ var validationError = function (res, err) {
 exports.index = function (req, res) {
   User.find({}, '-salt -hashedPassword', function (err, users) {
     if (err) {
-      return res.send(500, err);
+      return res.status(500).send(err);
     }
-    res.json(200, users);
+    res.status(200).json(users);
   });
 };
 
@@ -49,7 +49,7 @@ exports.show = function (req, res, next) {
       return next(err);
     }
     if (!user) {
-      return res.send(401);
+      return res.status(401);
     }
     res.json(user.profile);
   });
@@ -83,7 +83,7 @@ exports.changePassword = function (req, res, next) {
         if (err) {
           return validationError(res, err);
         }
-        res.send(200);
+        res.status(200);
       });
     } else {
       next(new ForbiddenError());

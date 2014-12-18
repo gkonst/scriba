@@ -36,7 +36,7 @@ var forbiddenIfRestricted = exports.forbiddenIfRestricted = function (permittedC
 
 var resultAsJson = exports.resultAsJson = function (status) {
   return function (req, res, next, result) {
-    res.json(status || 200, result);
+    res.status(status || 200).json(result);
   }
 };
 
