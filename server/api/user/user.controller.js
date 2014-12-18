@@ -4,36 +4,17 @@ var User = require('./user.model');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var ForbiddenError = require('../../components/errors/forbidden.error');
+var UnauthorizedError = require('../../components/errors/unauthorized.error');
+var common = require('../common');
 
-var validationError = function (res, err) {
-  return res.json(422, err);
-};
-
-exports.create = function (req, res) {
+exports.create = function (req, res, next) {
   var newUser = new User(req.body);
   newUser.provider = 'local';
   newUser.role = 'user';
-  newUser.save(function (err, user) {
-    if (err) {
-      return validationError(res, err);
-    }
+  newUser.save(common.nextIfErr(req, res, next, function (user) {
     var token = jwt.sign({_id: user._id}, config.secrets.session, {expiresInMinutes: config.tokenDuration.session});
     res.json({token: token});
-  });
-};
-
-exports.show = function (req, res, next) {
-  var userId = req.params.id;
-
-  User.findById(userId, function (err, user) {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return res.status(401);
-    }
-    res.json(user.profile);
-  });
+  }));
 };
 
 exports.changePassword = function (req, res, next) {
@@ -44,12 +25,9 @@ exports.changePassword = function (req, res, next) {
   User.findById(userId, function (err, user) {
     if (user.authenticate(oldPass)) {
       user.password = newPass;
-      user.save(function (err) {
-        if (err) {
-          return validationError(res, err);
-        }
+      user.save(common.nextIfErr(req, res, next, function () {
         res.status(200);
-      });
+      }));
     } else {
       next(new ForbiddenError());
     }
@@ -60,13 +38,11 @@ exports.me = function (req, res, next) {
   var userId = req.user._id;
   User.findOne({
     _id: userId
-  }, '-salt -hashedPassword', function (err, user) { // don't ever give out the password or salt
-    if (err) {
-      return next(err);
+  }, '-salt -hashedPassword', common.nextIfErr(req, res, next, function (user) {
+    if (user) {
+      res.json(user);
+    } else {
+      next(new UnauthorizedError());
     }
-    if (!user) {
-      return res.json(401);
-    }
-    res.json(user);
-  });
+  }));
 };
