@@ -449,11 +449,15 @@ module.exports = function (grunt) {
           reporter: 'spec'
         }
       },
+      coverage: {
+        options: {
+          reporter: 'html-cov',
+          output: '.tmp/coverage.html'
+        }
+      },
       coverageCI: {
         options: {
           coveralls: true
-          //reporter: 'html-cov',
-          //output: '.tmp/coverage.html'
         }
       }
     },

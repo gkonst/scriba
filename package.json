@@ -91,7 +91,7 @@
       "pattern": [
         "server"
       ],
-      "data-cover-never": "//.*spec.*$/i"
+      "data-cover-never": "//.*spec|node_modules.*$/i"
     }
   },
   "private": true
