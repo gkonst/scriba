@@ -71,7 +71,7 @@ module.exports = function (grunt) {
         tasks: ['injector:css']
       },
       serverTest: {
-        files: ['server/**/*.js'],
+        files: ['server/**/*.spec.js'],
         tasks: ['newer:jshint:serverTest', 'env:test', 'mochacov:test']
       },
       clientTest: {
@@ -109,7 +109,8 @@ module.exports = function (grunt) {
       },
       server: {
         files: [
-          'server/**/*.{js,json}'
+          'server/**/*.{js,json}',
+          '!server/**/*.spec.js'
         ],
         tasks: ['newer:jshint:server', 'env:test', 'mochacov:test', 'express:dev', 'wait'],
         options: {

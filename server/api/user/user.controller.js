@@ -11,9 +11,9 @@ exports.create = function (req, res, next) {
   var newUser = new User(req.body);
   newUser.provider = 'local';
   newUser.role = 'user';
-  newUser.save(common.nextIfErr(req, res, next, function (user) {
+  newUser.save(common.nextIfErr(next, function (user) {
     var token = jwt.sign({_id: user._id}, config.secrets.session, {expiresInMinutes: config.tokenDuration.session});
-    res.json({token: token});
+    res.status(201).json({token: token});
   }));
 };
 
@@ -22,16 +22,16 @@ exports.changePassword = function (req, res, next) {
   var oldPass = String(req.body.oldPassword);
   var newPass = String(req.body.newPassword);
 
-  User.findById(userId, function (err, user) {
+  User.findById(userId, common.nextIfErr(next, function (user) {
     if (user.authenticate(oldPass)) {
       user.password = newPass;
       user.save(common.nextIfErr(next, function () {
-        res.status(200);
+        res.status(204).json();
       }));
     } else {
       next(new ForbiddenError());
     }
-  });
+  }));
 };
 
 exports.me = function (req, res, next) {
