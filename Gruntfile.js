@@ -17,7 +17,8 @@ module.exports = function (grunt) {
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
     injector: 'grunt-asset-injector',
-    buildcontrol: 'grunt-build-control'
+    buildcontrol: 'grunt-build-control',
+    mochacov: 'grunt-mocha-cov'
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -71,7 +72,7 @@ module.exports = function (grunt) {
       },
       serverTest: {
         files: ['server/**/*.js'],
-        tasks: ['newer:jshint:serverTest', 'env:test', 'mochaTest']
+        tasks: ['newer:jshint:serverTest', 'env:test', 'mochacov:test']
       },
       clientTest: {
         files: [
@@ -110,7 +111,7 @@ module.exports = function (grunt) {
         files: [
           'server/**/*.{js,json}'
         ],
-        tasks: ['newer:jshint:server', 'env:test', 'mochaTest', 'express:dev', 'wait'],
+        tasks: ['newer:jshint:server', 'env:test', 'mochacov:test', 'express:dev', 'wait'],
         options: {
           livereload: true,
           nospawn: true //Without this option specified express won't be reloaded
@@ -440,11 +441,20 @@ module.exports = function (grunt) {
       }
     },
 
-    mochaTest: {
-      options: {
-        reporter: 'spec'
+    mochacov: {
+      options: {files: 'server/**/*.spec.js'},
+      test: {
+        options: {
+          reporter: 'spec'
+        }
       },
-      src: ['server/**/*.spec.js']
+      coverageCI: {
+        options: {
+          coveralls: true
+          //reporter: 'html-cov',
+          //output: '.tmp/coverage.html'
+        }
+      }
     },
 
     protractor: {
@@ -619,7 +629,7 @@ module.exports = function (grunt) {
         'jshint:serverTest',
         'env:all',
         'env:test',
-        'mochaTest'
+        'mochacov:test'
       ]);
     }
 
@@ -657,6 +667,15 @@ module.exports = function (grunt) {
         'test:client'
       ]);
   });
+
+  grunt.registerTask('test-ci', [
+    'jshint:server',
+    'jshint:serverTest',
+    'env:all',
+    'env:test',
+    'mochacov:coverageCI',
+    'test:client'
+  ]);
 
   grunt.registerTask('build', [
     'clean:dist',
