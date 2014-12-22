@@ -4,7 +4,6 @@ var User = require('./user.model');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var ForbiddenError = require('../../components/errors/forbidden.error');
-var UnauthorizedError = require('../../components/errors/unauthorized.error');
 var common = require('../common');
 
 exports.create = function (req, res, next) {
@@ -35,14 +34,7 @@ exports.changePassword = function (req, res, next) {
 };
 
 exports.me = function (req, res, next) {
-  var userId = req.user._id;
   User.findOne({
-    _id: userId
-  }, '-salt -hashedPassword', common.nextIfErr(next, function (user) {
-    if (user) {
-      res.json(user);
-    } else {
-      next(new UnauthorizedError());
-    }
-  }));
+    _id: req.user._id
+  }, '-salt -hashedPassword', common.nextIfErr(req, res, next, common.resultAsJson()));
 };
