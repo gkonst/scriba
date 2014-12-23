@@ -1,5 +1,7 @@
 'use strict';
 
+var winston = require('winston');
+
 module.exports = function (app) {
   //jshint unused: false
   //noinspection JSUnusedLocalSymbols
@@ -9,7 +11,7 @@ module.exports = function (app) {
     } else {
       var status = err.status || 500;
       if (status === 500) {
-        console.error(err.stack);
+        winston.error(err.stack);
       }
       res.status(status).send({
         status: status,

@@ -17,6 +17,7 @@ var passport = require('passport');
 var session = require('express-session');
 var mongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
+var winston = require('winston');
 
 module.exports = function (app) {
   var env = app.get('env');
@@ -46,13 +47,19 @@ module.exports = function (app) {
     app.use(morgan('dev'));
   }
 
-  if ('development' === env || 'test' === env) {
+  if ('development' === env) {
     app.use(require('connect-livereload')());
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, 'client')));
     app.set('appPath', 'client');
-    if ('development' === env) {
-      app.use(morgan('dev'));
-    }
+    app.use(morgan('dev'));
+  }
+
+  if ('test' === env) {
+    winston.remove(winston.transports.Console);
+    app.use(require('connect-livereload')());
+    app.use(express.static(path.join(config.root, '.tmp')));
+    app.use(express.static(path.join(config.root, 'client')));
+    app.set('appPath', 'client');
   }
 };
