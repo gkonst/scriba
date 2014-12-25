@@ -450,7 +450,7 @@ module.exports = function (grunt) {
 
     mocha_istanbul: {
       options: {
-        excludes: ['**/config/**']
+        excludes: ['**/config/**', '*.spec.js']
       },
       coverage: {
         src: ['server/**/*.spec.js']
