@@ -459,6 +459,7 @@ module.exports = function (grunt) {
         src: ['server/**/*.spec.js'],
         options: {
           coverage: true,
+          root: './server',
           reportFormats: ['cobertura', 'lcovonly']
         }
       }
