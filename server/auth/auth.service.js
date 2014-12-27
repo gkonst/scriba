@@ -39,25 +39,6 @@ exports.isAuthenticated = function () {
 };
 
 /**
- * Checks if the user role meets the minimum requirements of the route
- */
-exports.hasRole = function (roleRequired) {
-  if (!roleRequired) {
-    throw new Error('Required role needs to be set');
-  }
-
-  return compose()
-    .use(exports.isAuthenticated())
-    .use(function meetsRequirements(req, res, next) {
-      if (config.userRoles.indexOf(req.user.role) >= config.userRoles.indexOf(roleRequired)) {
-        next();
-      } else {
-        next(new ForbiddenError());
-      }
-    });
-};
-
-/**
  * Returns a jwt token signed by the app secret
  */
 var signToken = exports.signToken = function (id, role, expiresInMinutes) {

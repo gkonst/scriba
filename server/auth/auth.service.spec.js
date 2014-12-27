@@ -76,5 +76,4 @@ describe('Auth.isAuthenticated', function () {
         done();
       });
   });
-
 });
