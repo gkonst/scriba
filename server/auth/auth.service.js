@@ -8,6 +8,7 @@ var User = require('../api/user/user.model');
 var validateJwt = expressJwt({secret: config.secrets.session});
 var UnauthorizedError = require('../components/errors/unauthorized.error');
 var ForbiddenError = require('../components/errors/forbidden.error');
+var common = require('../api/common');
 
 /**
  * Attaches the user object to the request if authenticated
@@ -26,16 +27,14 @@ exports.isAuthenticated = function () {
     })
     // Attach user to request
     .use(function (req, res, next) {
-      User.findById(req.user._id, function (err, user) {
-        if (err) {
-          next(err);
-        } else if (user) {
+      User.findById(req.user._id, common.nextIfErr(next, function (user) {
+        if (user) {
           req.user = user;
           next();
         } else {
           next(new UnauthorizedError('user_not_found', 'User not found'));
         }
-      });
+      }));
     });
 };
 
