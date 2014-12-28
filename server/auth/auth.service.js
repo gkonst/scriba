@@ -7,7 +7,6 @@ var compose = require('composable-middleware');
 var User = require('../api/user/user.model');
 var validateJwt = expressJwt({secret: config.secrets.session});
 var UnauthorizedError = require('../components/errors/unauthorized.error');
-var ForbiddenError = require('../components/errors/forbidden.error');
 var common = require('../api/common');
 
 /**
@@ -53,6 +52,6 @@ exports.setToken = function (req, res) {
     var token = signToken(req.user._id, req.user.role, config.tokenDuration.session);
     res.redirect('/login/' + token);
   } else {
-    res.json(404, {message: 'Something went wrong, please try again.'});
+    res.status(404).json({message: 'Something went wrong, please try again.'});
   }
 };

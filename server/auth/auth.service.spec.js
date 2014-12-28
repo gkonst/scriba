@@ -6,6 +6,7 @@ var proxyquire = require('proxyquire');
 var express = require('express');
 var UserStub = {};
 var auth = proxyquire('./auth.service', {'../api/user/user.model': UserStub});
+var config = require('../config/environment');
 
 describe('Auth.isAuthenticated', function () {
   var app;
@@ -75,5 +76,44 @@ describe('Auth.isAuthenticated', function () {
         res.error.text.should.have.string('User not found');
         done();
       });
+  });
+});
+
+describe('Auth.setToken', function () {
+  var app;
+  var user = {_id: '017b043ad0386eab3d164673', name: 'testUser'};
+
+  beforeEach(function () {
+    app = express();
+  });
+
+  it('should redirect to /login/{token} if user is in req', function (done) {
+    // given
+    UserStub.findById = function (id, clbk) {
+      clbk(undefined, user);
+    };
+    app.get('/', auth.isAuthenticated(), auth.setToken);
+    var token = auth.signToken(user._id, user.role, config.tokenDuration.session);
+    // when & then
+    request(app)
+      .get('/')
+      .set('Authorization', 'Bearer ' + token)
+      .expect(302)
+      .end(function (err, res) {
+        if (err) {
+          done(err);
+        }
+        res.headers.location.should.equal('/login/' + token);
+        done();
+      });
+  });
+
+  it('should return 404 if user is NOT in req', function (done) {
+    // given
+    app.get('/', auth.setToken);
+    // when & then
+    request(app)
+      .get('/')
+      .expect(404, done);
   });
 });
