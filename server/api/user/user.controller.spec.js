@@ -4,7 +4,8 @@ var should = require('chai').should();
 var app = require('../../app');
 var request = require('supertest');
 var User = require('./user.model');
-var token = 'Bearer ' + require('../../auth/auth.service').signToken('017b043ad0386eab3d164673');
+var auth = require('../../auth/auth.service');
+var token = 'Bearer ' + auth.signToken('017b043ad0386eab3d164673');
 
 describe('GET /api/user/me', function () {
 
@@ -58,8 +59,8 @@ describe('PUT /api/user/me/password', function () {
   it('should change user password if old password correct', function (done) {
     request(app)
       .put('/api/user/me/password')
-      .set('Authorization', token)
-      .send({oldPassword: 'test', newPassword: 'test1'})
+      .set('Authorization', 'Bearer ' + auth.signToken('027b043ad0386eab3d164673'))
+      .send({oldPassword: 'test1', newPassword: 'test11'})
       .expect(204, done);
   });
 
