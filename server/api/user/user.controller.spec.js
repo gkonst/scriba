@@ -9,6 +9,8 @@ var token = 'Bearer ' + auth.signToken('017b043ad0386eab3d164673');
 
 describe('GET /api/user/me', function () {
 
+  require('../../config/fixtures_loader')();
+
   it('should respond with current profile', function (done) {
     request(app)
       .get('/api/user/me')
@@ -56,6 +58,9 @@ describe('POST /api/user', function () {
 });
 
 describe('PUT /api/user/me/password', function () {
+
+  require('../../config/fixtures_loader')();
+
   it('should change user password if old password correct', function (done) {
     request(app)
       .put('/api/user/me/password')

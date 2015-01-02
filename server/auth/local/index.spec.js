@@ -5,6 +5,9 @@ var app = require('../../app');
 var request = require('supertest');
 
 describe('POST /auth/local', function () {
+
+  require('../../config/fixtures_loader')();
+
   it('should authenticate and return token if user found and password correct', function (done) {
     var authData = {email: 'test@test.com', password: 'test'};
     request(app)

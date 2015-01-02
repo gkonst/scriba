@@ -10,12 +10,17 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var express = require('express');
 var mongoose = require('mongoose');
 var config = require('./config/environment');
+var fixtures = require('pow-mongoose-fixtures');
 
 // Connect to database
 mongoose.connect(config.mongo.uri, config.mongo.options);
 
 // Populate DB with sample data
-if(config.seedDB) { require('./config/seed'); }
+if (config.seedDB) {
+  fixtures.load(__dirname + '/config/fixtures', mongoose.connection, function () {
+    console.log('Fixtures loaded.');
+  });
+}
 
 // Setup server
 var app = express();

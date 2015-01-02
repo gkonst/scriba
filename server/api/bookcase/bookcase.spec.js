@@ -9,6 +9,8 @@ var token = 'Bearer ' + require('../../auth/auth.service').signToken('017b043ad0
 
 describe('GET /api/bookcase', function () {
 
+  require('../../config/fixtures_loader')();
+
   it('should respond with JSON array', function (done) {
     request(app)
       .get('/api/bookcase')
@@ -27,6 +29,8 @@ describe('GET /api/bookcase', function () {
 });
 
 describe('GET /api/bookcase/{id}', function () {
+
+  require('../../config/fixtures_loader')();
 
   it('should respond with JSON object if found', function (done) {
     request(app)
@@ -63,6 +67,8 @@ describe('GET /api/bookcase/{id}', function () {
 });
 
 describe('GET /api/bookcase/{id}/books', function () {
+
+  require('../../config/fixtures_loader')();
 
   it('should respond with JSON array if bookcase exist and has books', function (done) {
     request(app)
@@ -114,6 +120,9 @@ describe('GET /api/bookcase/{id}/books', function () {
 });
 
 describe('POST /api/bookcase', function () {
+
+  require('../../config/fixtures_loader')();
+
   it('should save bookcase and set current user in it', function (done) {
     var bookcase = {name: 'test'};
     request(app)
@@ -134,6 +143,9 @@ describe('POST /api/bookcase', function () {
 });
 
 describe('PUT /api/bookcase/{id}', function () {
+
+  require('../../config/fixtures_loader')();
+
   it('should update bookcase', function (done) {
     var bookcase = {name: 'test'};
     request(app)
@@ -171,6 +183,9 @@ describe('PUT /api/bookcase/{id}', function () {
 });
 
 describe('DELETE /api/bookcase/{id}', function () {
+
+  require('../../config/fixtures_loader')();
+
   it('should delete bookcase', function (done) {
     request(app)
       .delete('/api/bookcase/137b043ad0386eab3d164673')

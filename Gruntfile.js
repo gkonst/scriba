@@ -443,7 +443,9 @@ module.exports = function (grunt) {
 
     mochaTest: {
       options: {
-        reporter: 'spec'
+        reporter: 'spec',
+        timeout: 3000,
+        clearRequireCache: true
       },
       src: ['server/**/*.spec.js']
     },
@@ -576,8 +578,8 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.event.on('coverage', function(lcov, done){
-    require('coveralls').handleInput(lcov, function(err){
+  grunt.event.on('coverage', function (lcov, done) {
+    require('coveralls').handleInput(lcov, function (err) {
       if (err) {
         return done(err);
       }
