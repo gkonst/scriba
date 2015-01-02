@@ -7,6 +7,7 @@ var BookSchema = new Schema({
   name: {type: String, required: true},
   info: String,
   author: {type: String, required: true},
+  user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
   bookcase: {type: Schema.Types.ObjectId, ref: 'Bookcase', required: true},
   shelf: {type: Number, required: true},
   line: {type: Number, required: true},
