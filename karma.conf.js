@@ -35,7 +35,7 @@ module.exports = function (config) {
     },
 
     preprocessors: {
-      'client/**/!(*spec|*mock).js': ['coverage'],
+      'client/!(bower_components)/**/!(*spec|*mock).js': ['coverage'],
       '**/*.html': 'html2js'
     },
 
