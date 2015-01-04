@@ -1,13 +1,17 @@
 'use strict';
 
 angular.module('scriba.book')
-  .controller('BookListCtrl', function ($log, $modal, $routeParams, Bookcase) {
+  .controller('BookListCtrl', function ($log, $modal, $routeParams, Modal, Book, Bookcase) {
     var vm = this;
 
     vm.bookcaseId = $routeParams.bookcaseId;
 
     function refresh() {
-      vm.books = Bookcase.queryBooks({id: vm.bookcaseId});
+      if (vm.bookcaseId) {
+        vm.books = Bookcase.queryBooks({id: vm.bookcaseId});
+      } else {
+        vm.books = Book.query();
+      }
     }
 
     vm.add = function () {
@@ -26,6 +30,12 @@ angular.module('scriba.book')
         refresh();
       });
     };
+
+    vm.remove = Modal.confirm.delete(function (id) {
+      Book.remove({id: id}, function () {
+        refresh();
+      });
+    });
 
     refresh();
   })

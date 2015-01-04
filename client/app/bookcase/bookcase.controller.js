@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scriba.bookcase')
-  .controller('BookcaseListCtrl', function ($modal, $log, Modal, Bookcase) {
+  .controller('BookcaseListCtrl', function ($log, $modal, Modal, Bookcase) {
     var vm = this;
 
     function refresh() {

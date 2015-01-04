@@ -3,7 +3,7 @@
 describe('Controller: BookcaseListCtrl', function () {
   beforeEach(module('scriba.bookcase'));
 
-  var sut, $httpBackend, scope, modalMock, deleteConfirmed;
+  var sut, $httpBackend, modalMock, deleteConfirmed;
 
   beforeEach(inject(function (_$httpBackend_, $controller) {
     $httpBackend = _$httpBackend_;
@@ -19,9 +19,9 @@ describe('Controller: BookcaseListCtrl', function () {
       }
     };
     sut = $controller('BookcaseListCtrl', {
-      Modal: modalMock,
-      $scope: scope
+      Modal: modalMock
     });
+    deleteConfirmed = false;
   }));
 
   afterEach(function () {
