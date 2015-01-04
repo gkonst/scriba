@@ -14,6 +14,7 @@
       <th>Author</th>
       <th>Shelf</th>
       <th>Line</th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -23,6 +24,13 @@
       <td>{{book.author}}</td>
       <td>{{book.shelf}}</td>
       <td>{{book.line}}</td>
+      <td>
+        <span class="pull-right">
+          <a ng-click="bookListCtrl.remove(book.name, book._id)"
+             class="trash"
+             title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+        </span>
+      </td>
     </tr>
     <tr ng-hide="bookListCtrl.books.length">
       <td colspan="5">No books yet</td>
