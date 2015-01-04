@@ -27,7 +27,15 @@ module.exports = function (config) {
       'client/components/**/*.html'
     ],
 
+    reporters: ['progress', 'coverage'],
+
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    },
+
     preprocessors: {
+      'client/**/!(*spec|*mock).js': ['coverage'],
       '**/*.html': 'html2js'
     },
 
