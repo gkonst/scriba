@@ -12,7 +12,7 @@
                  name="name"
                  type="text"
                  class="form-control"
-                 ng-model="bookDetailCtrl.book.name"
+                 ng-model="bookDetailCtrl.model.name"
                  required
                  autofocus>
           <error-messages field="form.name"></error-messages>
@@ -27,7 +27,7 @@
                  name="author"
                  type="text"
                  class="form-control"
-                 ng-model="bookDetailCtrl.book.author"
+                 ng-model="bookDetailCtrl.model.author"
                  required>
           <error-messages field="form.author"></error-messages>
         </div>
@@ -37,7 +37,7 @@
         <label for="input-desc" class="col-md-2 control-label">Description</label>
 
         <div class="col-md-10">
-          <textarea class="form-control" id="input-desc" placeholder="Description" ng-model="bookDetailCtrl.book.info"></textarea>
+          <textarea class="form-control" id="input-desc" placeholder="Description" ng-model="bookDetailCtrl.model.info"></textarea>
         </div>
       </div>
 
@@ -49,7 +49,7 @@
                  name="shelf"
                  type="number"
                  class="form-control"
-                 ng-model="bookDetailCtrl.book.shelf"
+                 ng-model="bookDetailCtrl.model.shelf"
                  required>
           <error-messages field="form.shelf"></error-messages>
         </div>
@@ -63,7 +63,7 @@
                  name="line"
                  type="number"
                  class="form-control"
-                 ng-model="bookDetailCtrl.book.line"
+                 ng-model="bookDetailCtrl.model.line"
                  required>
           <error-messages field="form.line"></error-messages>
         </div>

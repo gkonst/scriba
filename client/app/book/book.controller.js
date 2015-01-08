@@ -14,14 +14,24 @@ angular.module('scriba.book')
       }
     }
 
-    vm.add = function () {
+    vm.add = function (id) {
       var modalInstance = $modal.open({
         templateUrl: 'app/book/book.detail.html',
-        controller: 'BookDetailCtrl',
+        controller: 'ModalDetailCtrl',
         controllerAs: 'bookDetailCtrl',
         resolve: {
-          bookcaseId: function () {
-            return vm.bookcaseId;
+          id: function () {
+            return id;
+          },
+          ModelFactory: function () {
+            return Book;
+          },
+          initial: function () {
+            return {
+              bookcase: vm.bookcaseId,
+              shelf: 1,
+              line: 1
+            };
           }
         }
       });
@@ -38,25 +48,4 @@ angular.module('scriba.book')
     });
 
     refresh();
-  })
-  .controller('BookDetailCtrl', function ($modalInstance, Book, bookcaseId) {
-    var vm = this;
-
-    vm.book = {
-      bookcase: bookcaseId,
-      shelf: 1,
-      line: 1
-    };
-
-    vm.save = function (bookForm) {
-      if (bookForm.$valid) {
-        Book.save(vm.book, function () {
-          $modalInstance.close();
-        });
-      }
-    };
-
-    vm.cancel = function () {
-      $modalInstance.dismiss('cancel');
-    };
   });

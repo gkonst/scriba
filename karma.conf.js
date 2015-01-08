@@ -18,7 +18,9 @@ module.exports = function (config) {
       'client/bower_components/ngstorage/ngStorage.js',
       'client/bower_components/angular-sanitize/angular-sanitize.js',
       'client/bower_components/angular-route/angular-route.js',
+      'client/bower_components/angular-messages/angular-messages.js',
       'client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+      'client/bower_components/angular-bootstrap-show-errors/src/showErrors.js',
       'client/bower_components/lodash/dist/lodash.compat.js',
       'client/app/app.js',
       'client/app/**/*.js',
@@ -30,8 +32,8 @@ module.exports = function (config) {
     reporters: ['progress', 'coverage'],
 
     coverageReporter: {
-      type : 'html',
-      dir : 'coverage/'
+      type: 'html',
+      dir: 'coverage/'
     },
 
     preprocessors: {

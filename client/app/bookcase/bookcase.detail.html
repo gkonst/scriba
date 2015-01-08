@@ -1,7 +1,7 @@
 <div>
   <form name="form" class="form-horizontal" role="form" ng-submit="bookcaseDetailCtrl.save(form)" novalidate>
     <div class="modal-header">
-      <h3 class="modal-title">{{bookcaseDetailCtrl.bookcase._id ? 'Edit' : 'New'}} bookcase</h3>
+      <h3 class="modal-title">{{bookcaseDetailCtrl.model._id ? 'Edit' : 'New'}} bookcase</h3>
     </div>
     <div class="modal-body">
 
@@ -13,7 +13,7 @@
                  name="name"
                  type="text"
                  class="form-control"
-                 ng-model="bookcaseDetailCtrl.bookcase.name"
+                 ng-model="bookcaseDetailCtrl.model.name"
                  required
                  autofocus>
           <error-messages field="form.name"></error-messages>
@@ -27,7 +27,7 @@
           <textarea class="form-control"
                     id="desc"
                     placeholder="Description"
-                    ng-model="bookcaseDetailCtrl.bookcase.info"></textarea>
+                    ng-model="bookcaseDetailCtrl.model.info"></textarea>
         </div>
       </div>
     </div>
