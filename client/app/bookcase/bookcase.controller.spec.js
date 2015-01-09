@@ -3,7 +3,7 @@
 describe('Controller: BookcaseListCtrl', function () {
   beforeEach(module('scriba.bookcase'));
 
-  var sut, $httpBackend, modalMock, deleteConfirmed;
+  var sut, $httpBackend, modalMock;
 
   beforeEach(inject(function (_$httpBackend_, $controller) {
     $httpBackend = _$httpBackend_;
@@ -11,9 +11,7 @@ describe('Controller: BookcaseListCtrl', function () {
       confirm: {
         delete: function (callback) {
           return function (name, id) {
-            if (deleteConfirmed) {
-              callback(id);
-            }
+            callback(id);
           };
         }
       }
@@ -21,7 +19,6 @@ describe('Controller: BookcaseListCtrl', function () {
     sut = $controller('BookcaseListCtrl', {
       Modal: modalMock
     });
-    deleteConfirmed = false;
   }));
 
   afterEach(function () {
@@ -44,7 +41,6 @@ describe('Controller: BookcaseListCtrl', function () {
   it('should remove bookcase and refresh if confirmed', function () {
     // given
     var id = 'testId';
-    deleteConfirmed = true;
     $httpBackend.expectGET('/api/bookcase')
       .respond([{name: 'test1'}, {name: 'test2'}]);
     $httpBackend.expectDELETE('/api/bookcase/testId')
@@ -58,20 +54,5 @@ describe('Controller: BookcaseListCtrl', function () {
 
     // then
     sut.bookcases.should.have.length(1);
-  });
-
-  it('should not remove bookcase and if not confirmed', function () {
-    // given
-    var id = 'testId';
-    deleteConfirmed = false;
-    $httpBackend.expectGET('/api/bookcase')
-      .respond([{name: 'test1'}, {name: 'test2'}]);
-
-    // when
-    sut.remove('name', id);
-    $httpBackend.flush();
-
-    // then
-    sut.bookcases.should.have.length(2);
   });
 });
