@@ -2,6 +2,10 @@
 
 angular.module('scriba.book')
   .factory('Book', function ($resource) {
-    return $resource('/api/book/:id');
+    return $resource('/api/book/:id', {}, {
+      update: {
+        method: 'PUT'
+      }
+    });
   });
 

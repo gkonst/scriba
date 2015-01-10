@@ -14,7 +14,7 @@ angular.module('scriba.book')
       }
     }
 
-    vm.add = function (id) {
+    function detail(id) {
       var modalInstance = $modal.open({
         templateUrl: 'app/book/book.detail.html',
         controller: 'ModalDetailCtrl',
@@ -39,7 +39,9 @@ angular.module('scriba.book')
       modalInstance.result.then(function () {
         refresh();
       });
-    };
+    }
+
+    vm.add = vm.edit = detail;
 
     vm.remove = Modal.confirm.delete(function (id) {
       Book.remove({id: id}, function () {

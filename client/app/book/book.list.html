@@ -26,6 +26,9 @@
       <td>{{book.line}}</td>
       <td>
         <span class="pull-right">
+          <a ng-click="bookListCtrl.edit(book._id)"
+             class="edit"
+             title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
           <a ng-click="bookListCtrl.remove(book.name, book._id)"
              class="trash"
              title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
