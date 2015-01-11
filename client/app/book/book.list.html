@@ -2,7 +2,7 @@
   <ol class="breadcrumb">
     <li><a ng-href="/">Home</a></li>
     <li><a ng-href="/bookcase">Bookcases</a></li>
-    <li>Books</li>
+    <li>Books <span ng-if="bookListCtrl.bookcase">in '{{bookListCtrl.bookcase.name}}'</span></li>
   </ol>
 
   <button type="button" class="btn btn-default" ng-click="bookListCtrl.add()">Add</button>

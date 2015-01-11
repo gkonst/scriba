@@ -53,6 +53,7 @@ module.exports = function (app) {
     app.use(express.static(path.join(config.root, 'client')));
     app.set('appPath', 'client');
     app.use(morgan('dev'));
+    app.disable('etag');
   }
 
   if ('test' === env) {

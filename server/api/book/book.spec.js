@@ -21,7 +21,7 @@ describe('GET /api/book', function () {
           return done(err);
         }
         res.body.should.be.instanceof(Array);
-        res.body.should.have.length(2);
+        res.body.should.have.length(3);
         done();
       });
   });

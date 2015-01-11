@@ -46,17 +46,18 @@ describe('Controller: BookListCtrl', function () {
   });
 
 
-  it('should fetch list of books for given bookcaseId', function () {
+  it('should fetch bookcase with list of books for given bookcaseId', function () {
     // given
     routeParams = {bookcaseId: '123'};
     $httpBackend.expectGET('/api/bookcase/123/books')
-      .respond([{name: 'test1'}, {name: 'test2'}]);
+      .respond({name: 'testBookcase', _id: '123', books: [{name: 'test1'}, {name: 'test2'}]});
 
     // when
     initCtrl();
     $httpBackend.flush();
 
     // then
+    sut.bookcase._id.should.equal('123');
     sut.books.should.have.length(2);
   });
 

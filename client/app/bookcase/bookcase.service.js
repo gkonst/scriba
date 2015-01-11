@@ -10,8 +10,7 @@ angular.module('scriba.bookcase')
         method: 'GET',
         params: {
           action: 'books'
-        },
-        isArray: true
+        }
       }
     });
   });

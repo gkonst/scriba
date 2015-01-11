@@ -70,7 +70,7 @@ describe('GET /api/bookcase/{id}/books', function () {
 
   require('../../config/fixtures_loader')();
 
-  it('should respond with JSON array if bookcase exist and has books', function (done) {
+  it('should respond with bookcase with books if bookcase exist and has books', function (done) {
     request(app)
       .get('/api/bookcase/117b043ad0386eab3d164673/books/')
       .set('Authorization', token)
@@ -80,13 +80,13 @@ describe('GET /api/bookcase/{id}/books', function () {
         if (err) {
           return done(err);
         }
-        res.body.should.be.instanceof(Array);
-        res.body.should.have.length(2);
+        res.body._id.should.equal('117b043ad0386eab3d164673');
+        res.body.books.should.have.length(2);
         done();
       });
   });
 
-  it('should respond with empty JSON array if bookcase exist and has no books', function (done) {
+  it('should respond with bookcase with empty books if bookcase exist and has no books', function (done) {
     request(app)
       .get('/api/bookcase/127b043ad0386eab3d164673/books/')
       .set('Authorization', token)
@@ -96,8 +96,8 @@ describe('GET /api/bookcase/{id}/books', function () {
         if (err) {
           return done(err);
         }
-        res.body.should.be.instanceof(Array);
-        res.body.should.have.length(0);
+        res.body._id.should.equal('127b043ad0386eab3d164673');
+        res.body.books.should.have.length(0);
         done();
       });
   });
