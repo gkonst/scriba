@@ -452,18 +452,17 @@ module.exports = function (grunt) {
 
     mocha_istanbul: {
       options: {
+        coverageFolder: 'coverage/server',
         excludes: ['**/config/**', '*.spec.js']
       },
       coverage: {
         src: ['server/**/*.spec.js']
-      },
-      coveralls: {
-        src: ['server/**/*.spec.js'],
-        options: {
-          coverage: true,
-          root: './server',
-          reportFormats: ['cobertura', 'lcovonly']
-        }
+      }
+    },
+
+    coveralls: {
+      all: {
+        src: 'coverage/**/lcov.info'
       }
     },
 
@@ -578,15 +577,6 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.event.on('coverage', function (lcov, done) {
-    require('coveralls').handleInput(lcov, function (err) {
-      if (err) {
-        return done(err);
-      }
-      done();
-    });
-  });
-
   // Used for delaying livereload until after server has restarted
   grunt.registerTask('wait', function () {
     grunt.log.ok('Waiting for server reload...');
@@ -693,12 +683,12 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('test-ci', [
-    'jshint:server',
-    'jshint:serverTest',
+    'jshint',
     'env:all',
     'env:test',
-    'mocha_istanbul:coveralls',
-    'test:client'
+    'mocha_istanbul:coverage',
+    'test:client',
+    'coveralls'
   ]);
 
   grunt.registerTask('build', [

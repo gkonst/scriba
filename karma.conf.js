@@ -32,8 +32,9 @@ module.exports = function (config) {
     reporters: ['progress', 'coverage'],
 
     coverageReporter: {
-      type: 'html',
-      dir: 'coverage/'
+      reporters: [
+        {type: 'lcov', dir: 'coverage/client/'}
+      ]
     },
 
     preprocessors: {
