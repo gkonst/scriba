@@ -456,7 +456,8 @@ module.exports = function (grunt) {
         excludes: ['**/config/**', '*.spec.js']
       },
       coverage: {
-        src: ['server/**/*.spec.js']
+        src: ['server/**/*.spec.js'],
+        root: './server'
       }
     },
 
