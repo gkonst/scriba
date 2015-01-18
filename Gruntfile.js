@@ -1,4 +1,3 @@
-// Generated on 2014-11-23 using generator-angular-fullstack 2.0.13
 'use strict';
 
 module.exports = function (grunt) {
@@ -461,9 +460,15 @@ module.exports = function (grunt) {
       }
     },
 
+    shell: {
+      merge_lcov: {
+        command: './node_modules/.bin/lcov-result-merger "./coverage/**/lcov.info" ./coverage/total-lcov.info'
+      }
+    },
+
     coveralls: {
       all: {
-        src: 'coverage/**/lcov.info'
+        src: 'coverage/total-lcov.info'
       }
     },
 
@@ -679,16 +684,16 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('coverage', [
-    'env:test',
-    'mocha_istanbul:coverage'
-  ]);
-
-  grunt.registerTask('test-ci', [
-    'jshint',
     'env:all',
     'env:test',
     'mocha_istanbul:coverage',
     'test:client',
+    'shell:merge_lcov'
+  ]);
+
+  grunt.registerTask('test-ci', [
+    'jshint',
+    'coverage',
     'coveralls'
   ]);
 

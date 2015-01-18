@@ -32,8 +32,9 @@ module.exports = function (config) {
     reporters: ['progress', 'coverage'],
 
     coverageReporter: {
+      dir: 'coverage',
       reporters: [
-        {type: 'lcov', dir: 'coverage/client/'}
+        {type: 'lcov', subdir: 'client'}
       ]
     },
 
