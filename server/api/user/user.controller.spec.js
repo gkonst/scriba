@@ -25,6 +25,7 @@ describe('GET /api/user/me', function () {
         res.body.email.should.equal('test@test.com');
         should.not.exist(res.body.salt);
         should.not.exist(res.body.hashedPassword);
+        should.not.exist(res.body.password);
         done();
       });
   });
