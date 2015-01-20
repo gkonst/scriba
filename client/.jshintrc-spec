@@ -9,6 +9,7 @@
     "inject": true,
     "it": true,
     "expect": true,
-    "sinon": true
+    "sinon": true,
+    "should": true
   }
 }
