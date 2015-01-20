@@ -1,11 +1,7 @@
 'use strict';
 
 angular.module('scribaApp', [
-  'ngStorage',
-  'ngResource',
-  'ngSanitize',
   'ngRoute',
-  'ngMessages',
   'ui.bootstrap',
   'ui.bootstrap.showErrors',
   'scriba.account',

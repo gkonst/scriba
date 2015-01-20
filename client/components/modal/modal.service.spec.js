@@ -3,7 +3,7 @@
 describe('Service: Modal.confirm.delete', function () {
   beforeEach(module('scribaApp'));
 
-  var sut, modalServiceMock, modalMock, $rootScope;
+  var sut, modalServiceMock, modalMock;
 
 
   beforeEach(module(function ($provide) {
@@ -14,13 +14,24 @@ describe('Service: Modal.confirm.delete', function () {
     $provide.value('$modal', modalServiceMock);
   }));
 
-  beforeEach(inject(function (Modal, $q, _$rootScope_) {
-    $rootScope = _$rootScope_;
+  beforeEach(inject(function (Modal, $q, $rootScope) {
     sut = Modal;
-    var deferred = $q.defer();
-    modalMock.result = deferred.promise;
-    modalMock.result.deferred = deferred;
+    modalMock.result = promise($q, $rootScope);
   }));
+
+  function promise($q, $rootScope) {
+    var deferred = $q.defer();
+    var result = deferred.promise;
+    result.resolve = function () {
+      deferred.resolve();
+      $rootScope.$apply();
+    };
+    result.reject = function (val) {
+      deferred.reject(val);
+      $rootScope.$apply();
+    };
+    return result;
+  }
 
   it('should open modal with name in html', function () {
     // given
@@ -41,8 +52,7 @@ describe('Service: Modal.confirm.delete', function () {
 
     // when
     confirm('some name', 'id');
-    modalMock.result.deferred.resolve();
-    $rootScope.$apply();
+    modalMock.result.resolve();
 
     // then
     deletion.should.be.calledWith('id');
@@ -55,8 +65,7 @@ describe('Service: Modal.confirm.delete', function () {
 
     // when
     confirm('some name', 'id');
-    modalMock.result.deferred.reject();
-    $rootScope.$apply();
+    modalMock.result.reject();
 
     // then
     deletion.should.not.be.called;
