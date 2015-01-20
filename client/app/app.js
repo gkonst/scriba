@@ -2,6 +2,7 @@
 
 angular.module('scribaApp', [
   'ngRoute',
+  'ngMessages',
   'ui.bootstrap',
   'ui.bootstrap.showErrors',
   'scriba.account',
