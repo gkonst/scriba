@@ -13,6 +13,7 @@ angular.module('scriba.account')
         changePassword: {
           method: 'PUT',
           params: {
+            id: 'me',
             controller: 'password'
           }
         },

@@ -10,7 +10,7 @@ angular.module('scriba.account', ['ngRoute', 'ngStorage', 'ngResource'])
         template: ' ',
         controller: function ($routeParams, Auth, $location) {
           if ($routeParams.sessionToken) {
-            Auth.setSessionToken($routeParams.sessionToken, function () {
+            Auth.postLogin({token: $routeParams.sessionToken}, function () {
               $location.path('/');
             });
           }

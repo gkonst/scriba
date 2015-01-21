@@ -4,9 +4,10 @@ angular.module('scriba.account')
   .factory('Auth', function Auth($location, $localStorage, User) {
     var currentUser = $localStorage.token ? User.get() : {};
 
-    function postLogin(data) {
+    function postLogin(data, callback) {
+      var cb = callback || angular.noop;
       $localStorage.token = data.token;
-      currentUser = User.get();
+      currentUser = User.get(cb);
     }
 
     function logout() {
@@ -14,7 +15,13 @@ angular.module('scriba.account')
       currentUser = {};
     }
 
+    function isLoggedIn() {
+      return currentUser.hasOwnProperty('_id');
+    }
+
     return {
+      postLogin: postLogin,
+
       login: function (user) {
         return User.login(user, postLogin).$promise;
       },
@@ -26,7 +33,7 @@ angular.module('scriba.account')
       },
 
       changePassword: function (oldPassword, newPassword) {
-        return User.changePassword({id: currentUser._id}, {
+        return User.changePassword({}, {
           oldPassword: oldPassword,
           newPassword: newPassword
         }).$promise;
@@ -36,9 +43,7 @@ angular.module('scriba.account')
         return currentUser;
       },
 
-      isLoggedIn: function () {
-        return currentUser.hasOwnProperty('role');
-      },
+      isLoggedIn: isLoggedIn,
 
       isLoggedInAsync: function (cb) {
         if (currentUser.hasOwnProperty('$promise')) {
@@ -47,17 +52,11 @@ angular.module('scriba.account')
           }).catch(function () {
             cb(false);
           });
-        } else if (currentUser.hasOwnProperty('role')) {
+        } else if (isLoggedIn()) {
           cb(true);
         } else {
           cb(false);
         }
-      },
-
-      setSessionToken: function (sessionToken, callback) {
-        var cb = callback || angular.noop;
-        $localStorage.token = sessionToken;
-        currentUser = User.get(cb);
       }
     };
   });
